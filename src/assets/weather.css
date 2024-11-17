@@ -1,0 +1,70 @@
+/* weather.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&display=swap');
+
+.weather-widget {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px;
+    max-width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Quicksand';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    z-index: 9999;
+}
+
+.weather-widget h2 {
+    font-size: 20px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.weather-widget .temperature {
+    font-size: 15px;
+    color: red;
+    margin: 10px 0;
+}
+
+.weather-widget .location {
+    font-size: 15px;
+    color: black;
+    margin-bottom: 15px;
+}
+
+.weather-widget .description {
+    font-size: 15px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+.weather-widget .weather-icon {
+    width: 50px;
+    height: 50px;
+    margin: 10px 0;
+}
+
+.weather-widget .loading {
+    font-size: 15px;
+    color: lightskyblue;
+}
+
+.weather-widget .error {
+    font-size: 15px;
+    color: red;
+}
+
+.weather-icon {
+    font-size: 30px;
+    color: lightslategrey;
+}
+
+h1 {
+    font-family: 'Quicksand';
+    font-size: 2rem;
+    color: black;
+}
