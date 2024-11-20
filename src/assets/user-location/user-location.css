@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&display=swap');
+
+.user-location-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    padding: 20px;
+    text-align: center;
+    background-image: url('https://i.pinimg.com/originals/3d/d2/86/3dd286a8c85ad38a5d7e0aa60139ac08.gif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+}
+
+.user-location-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.35);
+    z-index: 1;
+}
+
+.user-location-container h1 {
+    font-size: 50px;
+    color: rgb(236, 236, 236);
+    margin-bottom: 20px;
+    z-index: 2;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 10px;
+    z-index: 2;
+}
+
+label {
+    display: block;
+    margin: 10 px 0;
+    padding: 10px;
+    font-family: 'Quicksand';
+    color: rgb(236, 236, 236);
+    font-weight: 1000;
+    font-size: 20px;
+    z-index: 2;
+}
+
+select {
+    width: 225px;
+    padding: 8px;
+    font-family: 'Quicksand';
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    transition: all 0.3s ease-in-out;
+    max-height: 40px;
+    overflow-y: auto;
+    box-sizing: border-box;
+    cursor: pointer;
+    height: 40px;
+    z-index: 2;
+}
+
+select option {
+    padding: 4px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.back-button {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 20px 20px;
+    background-color: rgb(236, 236, 236);
+    color: black;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    z-index: 2;
+    transition: background-color 0.3s ease;
+}
+
+.back-button:hover {
+    background-color: rgb(155, 155, 155);
+}
+
+.to-main-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 20px 20px;
+    background-color: rgb(236, 236, 236);
+    color: black;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 20px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+    z-index: 2;
+    transition: background-color 0.3s ease;
+}
+
+.to-main-button:hover {
+    background-color: rgb(155, 155, 155);
+}
+
+@media (max-width: 600px) {
+    .user-location-container {
+        padding: 10px;
+    }
+
+    .user-location-container h1 {
+        font-size: 30px;
+    }
+
+    .form-group {
+        align-items: center;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    select {
+        width: 100%;
+    }
+}

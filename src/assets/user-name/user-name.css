@@ -1,0 +1,102 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600&display=swap');
+
+.name-input-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+    text-align: center;
+    background-image: url('https://mir-s3-cdn-cf.behance.net/project_modules/disp/31e5c115209901.5628e3b91960f.gif');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    position: relative;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+
+.name-input-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1;
+}
+
+.name-input-container h1 {
+    font-size: 50px;
+    color: rgb(236, 236, 236);
+    margin-bottom: 20px;
+    z-index: 2;
+}
+
+.line-input {
+    border: none;
+    border-bottom: 2px solid rgb(236, 236, 236);
+    background: transparent;
+    color: rgb(236, 236, 236);
+    font-family: 'Quicksand';
+    font-size: 24px;
+    padding: 10px 0;
+    text-align: left;
+    width: 40%;
+    outline: none;
+    transition: border-color 0.3s ease;
+    z-index: 2;
+}
+
+.line-input::placeholder {
+    color: lightgrey;
+    font-style: italic;
+    z-index: 2;
+}
+
+.name-input-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.next-button {
+    background-color: rgb(236, 236, 236);
+    color: black;
+    width: 50px;
+    height: 50px;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 20px;
+    transition: background-color 0.3s;
+    margin-left: 30px;
+    z-index: 2;
+}
+
+.next-button:disabled {
+    background-color: rgb(100, 100, 100);
+    cursor: not-allowed;
+}
+
+.next-button.active {
+    background-color: rgb(236, 236, 236);
+}
+
+.next-button:hover {
+    background-color: rgb(155, 155, 155);
+}
+
+.line-input:focus {
+    border-bottom-color: black;
+}
+
+* {
+    box-sizing: border-box;
+}
