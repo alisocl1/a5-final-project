@@ -1,0 +1,38 @@
+.weather-widget {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    margin-bottom: 2%;
+    margin-right: 2%;
+    background-color: rgb(160, 217, 233);
+    border-radius: 8px;
+    padding: 2em;
+    width: 20vw;
+    max-width: 350px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    font-family: 'Quicksand';
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.weather-widget h2 {
+    font-size: 20px;
+    color: black;
+}
+
+.weather-widget .weather-icon {
+    width: 50px;
+    height: 50px;
+    margin: 10px 0;
+}
+
+.weather-icon {
+    font-size: 30px;
+    color: lightslategrey;
+}
+
+h1 {
+    font-size: 2rem;
+    color: black;
+}

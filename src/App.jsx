@@ -1,56 +1,102 @@
 import React, { useState } from 'react';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import UserNameInput from './assets/user-name/user-name.jsx';
 import UserLocation from './assets/user-location/user-location.jsx';
-import WeatherWidget from './assets/weather-widget/weather-widget.jsx';
+import Overlay from './assets/overlay-menu/overlay-menu.jsx';
+import MenuButton from './assets/menu-button/menu-button.jsx';
+import UserRoom from './assets/user-room/user-room.jsx';
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 const App = () => {
     const [userName, setUserName] = useState('');
-    const [page, setPage] = useState('username');
 
-    const handleNext = (nextPage) => {
-        setPage(nextPage);
+    const [page, setPage] = useState('name');
+    const [transition, setTransition] = useState(true);
+    const [isMenuVisible, setIsMenuVisible] = useState(false);
+
+    const [userLocation, setUserLocation] = useState('');
+    const [selectedCountry, setSelectedCountry] = useState('');
+    const [selectedState, setSelectedState] = useState('');
+    const [selectedCity, setSelectedCity] = useState('');
+
+    const toggleMenu = () => {
+        setIsMenuVisible(!isMenuVisible);
     };
 
-    const handleBack = () => {
-        setPage('username');
+    const handleNextPage = (newPage) => {
+        setIsMenuVisible(false);
+        setTransition(false);
+
+        setTimeout(() => {
+            setPage(newPage);
+            setTransition(true);
+        }, 1000);
+    };
+
+    const navPage = (newPage) => {
+        setTransition(false);
+
+        setTimeout(() => {
+            setIsMenuVisible(false);
+            setTransition(true);
+            setPage(newPage);
+        }, 1000);
+    };
+
+    const renderPage = () => {
+        let fadeClass = transition ? 'fade-in' : 'fade-out';
+
+        switch (page) {
+            case 'name':
+                return (
+                    <div className={`fade ${fadeClass}`}>
+                        <UserNameInput 
+                            userName={userName} 
+                            setUserName={setUserName} 
+                            onNext={() => handleNextPage('location')} />
+                    </div>
+                );
+            case 'location':
+                return (
+                    <div className={`fade ${fadeClass}`}>
+                        <UserLocation 
+                            userName={userName}
+                            userLocation={userLocation}
+                            setUserLocation={setUserLocation}
+                            selectedCountry={selectedCountry}
+                            setSelectedCountry={setSelectedCountry}
+                            selectedState={selectedState}
+                            setSelectedState={setSelectedState}
+                            selectedCity={selectedCity}
+                            setSelectedCity={setSelectedCity}
+                            onNext={() => handleNextPage('your room')} 
+                        />
+                    </div>
+                );
+            case 'your room':
+                return (
+                    <div className={`fade ${fadeClass}`}>
+                        <MenuButton 
+                            onButtonClick={toggleMenu} 
+                        /> 
+                        <Overlay 
+                            onNavigate={navPage}
+                            isMenuVisible={isMenuVisible}
+                        />
+                        <UserRoom
+                            userName={userName}
+                            userLocation={userLocation}
+                        />
+                    </div>
+                );
+            default:
+                return null;
+        }
     };
 
     return (
-        <div className="inputs-container">
-            <TransitionGroup>
-                <CSSTransition
-                    key={page}
-                    timeout={1500}
-                    classNames="fade"
-                    unmountOnExit={false}
-                >
-                    <div className="page-container">
-                        {page === 'username' && (
-                            <UserNameInput 
-                                userName={userName} 
-                                setUserName={setUserName} 
-                                onNext={() => handleNext('location')} 
-                            />
-                        )}
-
-                        {page === 'location' && (
-                            <div>
-                                <UserLocation 
-                                    userName={userName}
-                                    onBack={() => setPage('username')}
-                                    onNext={() => setPage('main')}
-                                />
-                            </div>
-                        )}
-
-                        {page === 'main' && (
-                            <WeatherWidget />
-                        )}
-                    </div>
-                </CSSTransition>
-            </TransitionGroup>  
+        <div className="page-container">
+            {renderPage()}
         </div>
     );
 };

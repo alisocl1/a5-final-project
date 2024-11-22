@@ -1,0 +1,15 @@
+.room-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+}
+
+.header {
+    font-family: 'Quicksand';
+    font-size: clamp(35px, 5vw, 60px);
+    color: rgb(43, 43, 43);
+    white-space: nowrap;
+    display: flex;
+    margin-top: 10%;
+    margin-left: 10%;
+}
