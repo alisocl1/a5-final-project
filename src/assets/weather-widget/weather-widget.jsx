@@ -86,9 +86,7 @@ const WeatherWidget = ({ location }) => {
                 <p>
                     {getIcon('04n').icon}
                     loading weather data...<br />
-                    uncomment 'apiURL' to display data.<br />
-                    don't make too many api calls!
-                </p>
+                    uncomment 'apiURL' to display data.                </p>
             )}
         </div>
     );

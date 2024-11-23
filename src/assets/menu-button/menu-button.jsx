@@ -3,18 +3,26 @@ import './menu-button.css'
 
 const MenuButton = ( { onButtonClick } ) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [spinTo, setSpinTo] = useState(false)
     
     const handleButtonClick = () => {
         setIsOpen(!isOpen);
+        setSpinTo(isOpen);
         onButtonClick();
     };
 
     return (
         <div className="menu-container">
             <button 
-                className={`menu-button ${isOpen ? 'spin' : ''}`}
+                className={`menu-button ${isOpen ? 'spin-to' : spinTo ? 'spin-back' : ''}`}
                 onClick={handleButtonClick}
+                aria-expanded={isOpen}
+                aria-label="toggle menu"
             >
+                <div className="menu-icon"></div>
+                <div className="menu-icon"></div>
+                <div className="menu-icon"></div>
+
                 <svg
                     className="menu-border"
                     viewBox="0 0 100 100"
@@ -26,9 +34,6 @@ const MenuButton = ( { onButtonClick } ) => {
                         r="47" 
                     />
                 </svg>
-                <div className="menu-icon"></div>
-                <div className="menu-icon"></div>
-                <div className="menu-icon"></div>
             </button>
         </div>
     )

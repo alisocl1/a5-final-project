@@ -1,99 +1,129 @@
 .menu-container {
-    position: fixed;
-    display: flex;
-    align-items: center;
-    z-index: 4;
+  position: fixed;
+  display: flex;
+  align-items: center;
+  top: 0;
+  right: 0;
+  margin-top: 7%;
+  margin-right: 10%;
+  z-index: 4;
+}
+
+.menu-container .spin-to {
+  animation: spinTo 0.3s ease-in-out forwards;
+}
+
+.menu-container .spin-back {
+  animation: spinBack 0.3s ease-in-out forwards;
 }
 
 .menu-button {
-    position: fixed;
-    top: 0;
-    right: 0;
-    margin-top: 7%;
-    margin-right: 10%;
-    padding: 10px 10px;
-    background-color: rgb(43, 43, 43);
-    width: 60px;
-    height: 60px;
-    border: none;
-    border-radius: 50%;
-    cursor: pointer;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    flex-direction: column;
-    opacity: 1;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-  }
-
-  .menu-button .spin {
-    transform: rotate(-180deg);
-  }
+  padding: 10px 10px;
+  background-color: rgb(43, 43, 43);
+  width: 60px;
+  height: 60px;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  opacity: 1;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
   
-  .menu-border {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 5;
-  }
+.menu-border {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+}
 
-  .menu-border circle {
-    fill: none;
-    stroke: #90D4C5;
-    stroke-width: 4.5;
-    stroke-dasharray: 296;
+.menu-border circle {
+  fill: none;
+  stroke: #90D4C5;
+  stroke-width: 4.5;
+  stroke-dasharray: 296;
+  stroke-dashoffset: 296;
+  transition: stroke-dashoffset 0.5s ease-in-out;
+}
+
+.menu-border .animate-in {
+  stroke-dashoffset: 0;
+  animation: drawBorder 0.5s ease-in forwards;
+}
+
+.menu-border .animate-out {
+  stroke-dashoffset: 296;
+  animation: eraseBorder 0.3s ease-out forwards;
+}
+  
+.menu-icon {
+  height: 2.3px;
+  width: 27px;
+  background-color: rgb(236, 236, 236);
+  border-radius: 5px;
+  margin: 3px 0;
+  display: block;
+  transition: background-color 0.3s ease, transform 0.3s ease, margin 0.3s ease;
+  z-index: 10;
+}
+
+.menu-button.spin-to .menu-icon:nth-child(1) {
+  transform: translateY(3.5px) translateX(8px) rotate(45deg);
+  width: 15px;
+}
+
+.menu-button.spin-to .menu-icon:nth-child(3) {
+  transform: translateY(-3.5px) translateX(8px) rotate(-45deg);
+  width: 15px;
+}
+
+.menu-button.spin-to:hover .menu-icon {
+  margin: 3px 0;
+}
+
+.menu-button:hover .menu-icon {
+  margin: 4px 0;
+}
+
+.menu-button .menu-icon {
+  transition: background-color 0.3 ease, transform 0.3s ease, margin 0.3s ease;
+}
+
+@keyframes drawBorder {
+  from {
     stroke-dashoffset: 296;
-    transition: stroke-dashoffset 0.3s ease-in-out;
   }
-
-  .menu-border .animate-in {
+  to {
     stroke-dashoffset: 0;
-    animation: drawBorder 0.3s ease-in forwards;
   }
+}
 
-  .menu-border .animate-out {
+@keyframes eraseBorder {
+  from {
+    stroke-dashoffset: 0;
+  }
+  to {
     stroke-dashoffset: 296;
-    animation: eraseBorder 0.3s ease-out forwards;
   }
+}
 
-  .menu-button:hover {
-    background-color: rgb(43, 43, 43);
+@keyframes spinTo {
+  from {
+    transform: rotate(0deg);
   }
-  
-  .menu-icon {
-    height: 2.3px;
-    width: 27px;
-    background-color: rgb(236, 236, 236);
-    border-radius: 5px;
-    margin: 3px 0;
-    display: block;
-    transition: background-color 0.3s ease, transform 0.3s ease, margin 0.3s;
-    z-index: 10;
+  to {
+    transform: rotate(180deg);
   }
-  
-  .menu-button:hover .menu-icon {
-    background-color: rgb(236, 236, 236);
-    margin: 4.5px 0;
-  }
+}
 
-  .menu-button .menu-icon {
-    transition: background-color 0.3 ease, transform 0.5s ease, margin 0.3s ease;
+@keyframes spinBack {
+  from {
+    transform: rotate(180deg);
   }
-
-  @keyframes drawBorder {
-    from {
-      stroke-dashoffset: 296;
-    }
-    to {
-      stroke-dashoffset: 0;
-    }
+  to {
+    transform: rotate(0deg);
   }
-
-  @keyframes eraseBorder {
-    from {
-      stroke-dashoffset: 0;
-    }
-    to {
-      stroke-dashoffset: 296;
-    }
-  }
+}
