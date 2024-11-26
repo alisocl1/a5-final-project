@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import UserNameInput from './assets/user-name/user-name.jsx';
 import UserLocation from './assets/user-location/user-location.jsx';
 import Overlay from './assets/overlay-menu/overlay-menu.jsx';
@@ -8,16 +8,22 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 const App = () => {
-    const [userName, setUserName] = useState('');
-
-    const [page, setPage] = useState('name');
+    const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
+    const [userLocation, setUserLocation] = useState(localStorage.getItem('userLocation') || '');
+    
+    const [page, setPage] = useState(userName && userLocation ? 'your room' : 'name');
     const [transition, setTransition] = useState(true);
     const [isMenuVisible, setIsMenuVisible] = useState(false);
 
-    const [userLocation, setUserLocation] = useState('');
     const [selectedCountry, setSelectedCountry] = useState('');
     const [selectedState, setSelectedState] = useState('');
     const [selectedCity, setSelectedCity] = useState('');
+
+    // Save to localStorage when userName or userLocation changes
+    useEffect(() => {
+        if (userName) localStorage.setItem('userName', userName);
+        if (userLocation) localStorage.setItem('userLocation', userLocation);
+    }, [userName, userLocation]);
 
     const toggleMenu = () => {
         setIsMenuVisible(!isMenuVisible);
@@ -50,16 +56,17 @@ const App = () => {
             case 'name':
                 return (
                     <div className={`fade ${fadeClass}`}>
-                        <UserNameInput 
-                            userName={userName} 
-                            setUserName={setUserName} 
-                            onNext={() => handleNextPage('location')} />
+                        <UserNameInput
+                            userName={userName}
+                            setUserName={setUserName}
+                            onNext={() => handleNextPage('location')}
+                        />
                     </div>
                 );
             case 'location':
                 return (
                     <div className={`fade ${fadeClass}`}>
-                        <UserLocation 
+                        <UserLocation
                             userName={userName}
                             userLocation={userLocation}
                             setUserLocation={setUserLocation}
@@ -69,24 +76,16 @@ const App = () => {
                             setSelectedState={setSelectedState}
                             selectedCity={selectedCity}
                             setSelectedCity={setSelectedCity}
-                            onNext={() => handleNextPage('your room')} 
+                            onNext={() => handleNextPage('your room')}
                         />
                     </div>
                 );
             case 'your room':
                 return (
                     <div className={`fade ${fadeClass}`}>
-                        <MenuButton 
-                            onButtonClick={toggleMenu} 
-                        /> 
-                        <Overlay 
-                            onNavigate={navPage}
-                            isMenuVisible={isMenuVisible}
-                        />
-                        <UserRoom
-                            userName={userName}
-                            userLocation={userLocation}
-                        />
+                        <MenuButton onButtonClick={toggleMenu} />
+                        <Overlay onNavigate={navPage} isMenuVisible={isMenuVisible} />
+                        <UserRoom userName={userName} userLocation={userLocation} />
                     </div>
                 );
             default:
@@ -97,6 +96,7 @@ const App = () => {
     return (
         <div className="page-container">
             {renderPage()}
+            <button onClick={() => localStorage.clear()}>Reset</button>
         </div>
     );
 };
