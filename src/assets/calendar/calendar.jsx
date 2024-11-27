@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import './calendar.css';
 
 const Calendar = () => {
   const [events, setEvents] = useState([
@@ -8,16 +9,14 @@ const Calendar = () => {
     { id: 2, title: 'Event 2', date: '2024-11-15', time: '', description: '' },
   ]);
 
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to handle modal visibility
-  const [selectedEvent, setSelectedEvent] = useState(null); // Selected event for viewing details
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState(null);
 
-  // Add a new event
   const addEvent = (newEvent) => {
     setEvents([...events, { id: Date.now(), ...newEvent }]);
-    setIsModalOpen(false); // Close the modal after adding
+    setIsModalOpen(false);
   };
 
-  // Handle event click to show event details
   const handleEventClick = (clickInfo) => {
     setSelectedEvent({
       id: clickInfo.event.id,
@@ -28,15 +27,14 @@ const Calendar = () => {
     });
   };
 
-  // Remove event
   const removeEvent = (eventId) => {
     setEvents(events.filter((event) => event.id !== eventId));
-    setSelectedEvent(null); // Close the modal
+    setSelectedEvent(null);
   };
 
   return (
     <div>
-      <button onClick={() => setIsModalOpen(true)} style={addButtonStyles}>
+      <button onClick={() => setIsModalOpen(true)} className="add-button">
         Add Event
       </button>
 
@@ -88,8 +86,8 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
   };
 
   return (
-    <div style={overlayStyles}>
-      <div style={modalStyles}>
+    <div className="overlay">
+      <div className="modal">
         <h3>Add New Event</h3>
         <form onSubmit={handleSubmit}>
           <input
@@ -117,11 +115,11 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <div style={{ marginTop: '20px' }}>
-            <button type="submit" style={addButtonStyles}>
+          <div className="modal-buttons">
+            <button type="submit" className="add-button">
               Add Event
             </button>
-            <button onClick={onClose} style={closeButtonStyles}>
+            <button onClick={onClose} className="close-button">
               Cancel
             </button>
           </div>
@@ -134,75 +132,24 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
 // Modal for event details
 const EventOverlay = ({ event, onClose, onDelete }) => {
   return (
-    <div style={overlayStyles}>
-      <div style={modalStyles}>
+    <div className="overlay">
+      <div className="modal">
         <h3>Event Details</h3>
         <p><strong>Title:</strong> {event.title}</p>
         <p><strong>Date:</strong> {event.date}</p>
         {event.time && <p><strong>Time:</strong> {event.time}</p>}
         {event.description && <p><strong>Description:</strong> {event.description}</p>}
-        <div style={{ marginTop: '20px' }}>
-          <button onClick={onDelete} style={deleteButtonStyles}>
+        <div className="modal-buttons">
+          <button onClick={onDelete} className="delete-button">
             Delete
           </button>
-          <button onClick={onClose} style={closeButtonStyles}>
+          <button onClick={onClose} className="close-button">
             Close
           </button>
         </div>
       </div>
     </div>
   );
-};
-
-// Styles for buttons and modals
-const overlayStyles = {
-  position: 'fixed',
-  top: 0,
-  left: 0,
-  width: '100vw',
-  height: '100vh',
-  backgroundColor: 'rgba(0, 0, 0, 0.5)',
-  display: 'flex',
-  justifyContent: 'center',
-  alignItems: 'center',
-  zIndex: 1000,
-};
-
-const modalStyles = {
-  background: 'white',
-  padding: '20px',
-  borderRadius: '8px',
-  width: '300px',
-  textAlign: 'center',
-};
-
-const addButtonStyles = {
-  background: 'green',
-  color: 'white',
-  border: 'none',
-  padding: '10px 20px',
-  borderRadius: '5px',
-  cursor: 'pointer',
-  marginBottom: '10px',
-};
-
-const closeButtonStyles = {
-  background: 'gray',
-  color: 'white',
-  border: 'none',
-  padding: '10px 20px',
-  borderRadius: '5px',
-  cursor: 'pointer',
-};
-
-const deleteButtonStyles = {
-  background: 'red',
-  color: 'white',
-  border: 'none',
-  padding: '10px 20px',
-  borderRadius: '5px',
-  marginRight: '10px',
-  cursor: 'pointer',
 };
 
 export default Calendar;

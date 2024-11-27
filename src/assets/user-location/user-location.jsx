@@ -20,6 +20,68 @@ const UserLocation = ({
     const [states, setStates] = useState([]);
     const [cities, setCities] = useState([]);
 
+    useEffect(() => {
+        if (userLocation) {
+            const [cityName, countryCode] = userLocation.split(', ');
+    
+            const prepopulateLocation = async () => {
+                try {
+                    // Fetch and preselect country
+                    const countryResponse = await axios.get(
+                        `http://api.geonames.org/countryInfoJSON?username=${geoNamesUsername}`
+                    );
+                    const sortedCountries = countryResponse.data.geonames.sort((a, b) =>
+                        a.countryName.localeCompare(b.countryName)
+                    );
+                    setCountries(sortedCountries);
+    
+                    const country = sortedCountries.find(
+                        (c) => c.countryCode === countryCode
+                    );
+                    if (country) {
+                        setSelectedCountry(country.geonameId);
+    
+                        // Fetch and preselect state
+                        const stateResponse = await axios.get(
+                            `http://api.geonames.org/childrenJSON?geonameId=${country.geonameId}&username=${geoNamesUsername}`
+                        );
+                        const sortedStates = stateResponse.data.geonames.sort((a, b) =>
+                            a.name.localeCompare(b.name)
+                        );
+                        setStates(sortedStates);
+    
+                        // Extract stateName from your logic (e.g., `userLocation` if stored as "City, State, Country")
+                        const stateName = "Parsed State Name"; // Replace with actual parsed state name logic
+                        const state = sortedStates.find((s) => s.name === stateName);
+                        if (state) {
+                            setSelectedState(state.geonameId);
+    
+                            // Fetch and preselect city
+                            const cityResponse = await axios.get(
+                                `http://api.geonames.org/childrenJSON?geonameId=${state.geonameId}&username=${geoNamesUsername}`
+                            );
+                            const sortedCities = cityResponse.data.geonames.sort((a, b) =>
+                                a.name.localeCompare(b.name)
+                            );
+                            setCities(sortedCities);
+    
+                            const city = sortedCities.find((c) => c.name === cityName);
+                            if (city) {
+                                setSelectedCity(city.geonameId);
+                            }
+                        }
+                    }
+                } catch (err) {
+                    console.error('Failed to prepopulate location data.', err);
+                }
+            };
+    
+            prepopulateLocation();
+        }
+    }, [userLocation]);
+    
+    
+
     const handleNext = () => {
         const cityInfo = cities.find(city => city.geonameId === parseInt(selectedCity));
 
@@ -46,7 +108,13 @@ const UserLocation = ({
                 );
 
                 console.log(response.data);
-                setCountries(response.data.geonames);
+
+                // Sort countries alphabetically by name
+                const sortedCountries = response.data.geonames.sort((a, b) =>
+                    a.countryName.localeCompare(b.countryName)
+                );
+
+                setCountries(sortedCountries);
             } catch (err) {
                 console.error('Failed to fetch countries.')
             }
@@ -55,41 +123,52 @@ const UserLocation = ({
         fetchCountries();
     }, []);
 
-    // Fetch state/provinces
+    // Fetch states when selectedCountry is updated (user selection only)
     useEffect(() => {
-        const fetchStates = async() => {
-            if (!selectedCountry) return;
+        if (!selectedCountry) return;
+
+        const fetchStates = async () => {
             setLoading(true);
             try {
                 const response = await axios.get(
                     `http://api.geonames.org/childrenJSON?geonameId=${selectedCountry}&username=${geoNamesUsername}`
                 );
-                setStates(response.data.geonames || []);
+                const sortedStates = response.data.geonames.sort((a, b) =>
+                    a.name.localeCompare(b.name)
+                );
+                setStates(sortedStates);
             } catch (err) {
                 console.error('Failed to fetch states.', err);
             }
             setLoading(false);
         };
+
         fetchStates();
     }, [selectedCountry]);
 
-    // Fetch cities
+    // Fetch cities when selectedState is updated (user selection only)
     useEffect(() => {
-        const fetchCities = async() => {
-            if (!selectedState) return;
+        if (!selectedState) return;
+
+        const fetchCities = async () => {
             setLoading(true);
             try {
                 const response = await axios.get(
                     `http://api.geonames.org/childrenJSON?geonameId=${selectedState}&username=${geoNamesUsername}`
                 );
-                setCities(response.data.geonames || []);
+                const sortedCities = response.data.geonames.sort((a, b) =>
+                    a.name.localeCompare(b.name)
+                );
+                setCities(sortedCities);
             } catch (err) {
                 console.error('Failed to fetch cities.', err);
             }
             setLoading(false);
         };
+
         fetchCities();
     }, [selectedState]);
+
 
 
     return (
@@ -160,7 +239,7 @@ const UserLocation = ({
                         className="custom-dropdown"
                         value={selectedCity}
                         onChange={(e) => setSelectedCity(e.target.value)}
-                        disabled={!selectedState}
+                        disabled={!selectedCountry}
                     >
                         <option value="">Select a city</option>
                         {cities.length > 0 ? (
@@ -178,7 +257,7 @@ const UserLocation = ({
                 </div>
                 <button className={`next-button ${selectedCountry && selectedState && selectedCity ? 'active' : ''}`}
                     onClick={handleNext}
-                    disabled={!selectedCountry || !selectedState || !selectedCity}
+                    disabled={!selectedCountry}
                 >
                     →
                 </button>
