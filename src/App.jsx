@@ -32,7 +32,7 @@ const App = () => {
         setTimeout(() => {
             setPage(newPage);
             setTransition(true);
-        }, 1000);
+        }, 800);
     };
 
     const navPage = (newPage) => {
@@ -42,7 +42,7 @@ const App = () => {
             setIsMenuVisible(false);
             setTransition(true);
             setPage(newPage);
-        }, 1000);
+        }, 800);
     };
 
     const renderPage = () => {

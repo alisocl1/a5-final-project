@@ -6,7 +6,9 @@ const UserRoom = ({ userName, userLocation }) => {
     return (
         <div className="room-container">
             <h1 className="header">hello, {userName}</h1>
-            <WeatherWidget location={userLocation}/>
+            <div>
+                <WeatherWidget location={userLocation} />
+            </div>
 
             <div>
                 <Calendar />

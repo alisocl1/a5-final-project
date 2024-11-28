@@ -20,8 +20,8 @@
 .menu-button {
   padding: 10px 10px;
   background-color: rgb(43, 43, 43);
-  width: 60px;
-  height: 60px;
+  width: 55px;
+  height: 55px;
   border: none;
   border-radius: 50%;
   cursor: pointer;
@@ -43,7 +43,7 @@
 .menu-border circle {
   fill: none;
   stroke: #90D4C5;
-  stroke-width: 4.5;
+  stroke-width: 4.0;
   stroke-dasharray: 296;
   stroke-dashoffset: 296;
   transition: stroke-dashoffset 0.5s ease-in-out;
@@ -61,31 +61,31 @@
   
 .menu-icon {
   height: 2.3px;
-  width: 27px;
+  width: 23px;
   background-color: rgb(236, 236, 236);
   border-radius: 5px;
-  margin: 3px 0;
+  margin: 2px 0;
   display: block;
   transition: background-color 0.3s ease, transform 0.3s ease, margin 0.3s ease;
   z-index: 10;
 }
 
 .menu-button.spin-to .menu-icon:nth-child(1) {
-  transform: translateY(3.5px) translateX(8px) rotate(45deg);
-  width: 15px;
+  transform: translateY(2.2px) translateX(6.5px) rotate(45deg);
+  width: 13px;
 }
 
 .menu-button.spin-to .menu-icon:nth-child(3) {
-  transform: translateY(-3.5px) translateX(8px) rotate(-45deg);
-  width: 15px;
+  transform: translateY(-2.2px) translateX(6.5px) rotate(-45deg);
+  width: 13px;
 }
 
 .menu-button.spin-to:hover .menu-icon {
-  margin: 3px 0;
+  margin: 2px 0;
 }
 
 .menu-button:hover .menu-icon {
-  margin: 4px 0;
+  margin: 3px 0;
 }
 
 .menu-button .menu-icon {

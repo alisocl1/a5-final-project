@@ -6,12 +6,12 @@
 
 .page-container .fade-in {
   opacity: 0;
-  animation: fadeIn 1s forwards ease-in-out;
+  animation: fadeIn 0.8s forwards ease-in-out;
 }
 
 .page-container .fade-out {
   opacity: 1;
-  animation: fadeOut 1s forwards ease-in-out;
+  animation: fadeOut 0.8s forwards ease-in-out;
 }
 
 @keyframes fadeIn {

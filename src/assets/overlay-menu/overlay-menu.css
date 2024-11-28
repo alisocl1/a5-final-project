@@ -43,7 +43,7 @@
 }
 
 .page.slide-out { 
-  animation: slideOut 0.5s forwards;
+  animation: slideOut 0.2s forwards;
 }
 
 .page:hover {
