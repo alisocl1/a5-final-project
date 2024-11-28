@@ -9,21 +9,17 @@ import './App.css';
 
 const App = () => {
     const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
-    const [userLocation, setUserLocation] = useState(localStorage.getItem('userLocation') || '');
+    const [weatherLocation, setWeatherLocation] = useState(localStorage.getItem('weatherLocation') || '');
     
-    const [page, setPage] = useState(userName && userLocation ? 'your room' : 'name');
+    const [page, setPage] = useState(userName && weatherLocation ? 'your room' : 'name');
     const [transition, setTransition] = useState(true);
     const [isMenuVisible, setIsMenuVisible] = useState(false);
 
-    const [selectedCountry, setSelectedCountry] = useState('');
-    const [selectedState, setSelectedState] = useState('');
-    const [selectedCity, setSelectedCity] = useState('');
-
-    // Save to localStorage when userName or userLocation changes
+    // Save to localStorage when userName or weatherLocation changes
     useEffect(() => {
         if (userName) localStorage.setItem('userName', userName);
-        if (userLocation) localStorage.setItem('userLocation', userLocation);
-    }, [userName, userLocation]);
+        if (weatherLocation) localStorage.setItem('weatherLocation', weatherLocation);
+    }, [userName, weatherLocation]);
 
     const toggleMenu = () => {
         setIsMenuVisible(!isMenuVisible);
@@ -68,14 +64,7 @@ const App = () => {
                     <div className={`fade ${fadeClass}`}>
                         <UserLocation
                             userName={userName}
-                            userLocation={userLocation}
-                            setUserLocation={setUserLocation}
-                            selectedCountry={selectedCountry}
-                            setSelectedCountry={setSelectedCountry}
-                            selectedState={selectedState}
-                            setSelectedState={setSelectedState}
-                            selectedCity={selectedCity}
-                            setSelectedCity={setSelectedCity}
+                            setUserLocation={setWeatherLocation}
                             onNext={() => handleNextPage('your room')}
                         />
                     </div>
@@ -85,7 +74,7 @@ const App = () => {
                     <div className={`fade ${fadeClass}`}>
                         <MenuButton onButtonClick={toggleMenu} />
                         <Overlay onNavigate={navPage} isMenuVisible={isMenuVisible} />
-                        <UserRoom userName={userName} userLocation={userLocation} />
+                        <UserRoom userName={userName} userLocation={weatherLocation} />
                     </div>
                 );
             default:
@@ -96,7 +85,14 @@ const App = () => {
     return (
         <div className="page-container">
             {renderPage()}
-            <button onClick={() => localStorage.clear()}>Reset</button>
+            <button onClick={() => {
+                localStorage.clear();
+                setUserName('');
+                setWeatherLocation('');
+                setPage('name');
+            }}>
+                Reset
+            </button>
         </div>
     );
 };
