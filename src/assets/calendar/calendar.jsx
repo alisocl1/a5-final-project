@@ -33,7 +33,7 @@ const Calendar = () => {
   };
 
   return (
-    <div>
+    <div class="calendar">
       <button onClick={() => setIsModalOpen(true)} className="add-button">
         Add Event
       </button>
