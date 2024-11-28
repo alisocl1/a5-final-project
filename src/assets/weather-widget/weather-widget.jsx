@@ -45,7 +45,7 @@ const WeatherWidget = ({ location }) => {
     useEffect(() => {
         const fetchWeather = async () => {
             if (!location) return;
-            console.log(location)
+            console.log('Weather Data: ', location)
             setLoading(true);
             // const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&units=metric&appid=${apiKey}`;
 
