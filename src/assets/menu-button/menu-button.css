@@ -19,7 +19,7 @@
 
 .menu-button {
   padding: 10px 10px;
-  background-color: rgb(255, 255, 255);
+  background-color: transparent;
   width: 60px;
   height: 60px;
   border: none;
@@ -62,7 +62,7 @@
 .menu-icon {
   height: 2.3px;
   width: 27px;
-  background-color: #cfcfcf;
+  background-color: #ffffff;
   border-radius: 5px;
   margin: 2px 0;
   display: block;
@@ -90,6 +90,10 @@
 
 .menu-button .menu-icon {
   transition: background-color 0.3 ease, transform 0.3s ease, margin 0.3s ease;
+}
+
+.menu-button:hover {
+  background-color: #333;
 }
 
 @keyframes drawBorder {
