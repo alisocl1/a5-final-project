@@ -10,14 +10,16 @@
   z-index: 5;
   transform-origin: top right; /* Scale from the top-right corner */
   transform: translate(26.5%, -48.5%);
-  pointer-events: none;
 }
 
 /* When visible, the circle expands */
 .overlay.visible {
   width: 200vw;
   height: 200vw;
-  pointer-events: auto;
+}
+
+.overlay:not(.visible) {
+  transition-delay: 0.2s;
 }
 
 .overlay:not(.visible) {
@@ -29,10 +31,12 @@
   position: relative;
   left: -100%;
   opacity: 0;
-  animation: slideIn 0.5s forwards;
-  margin-bottom: 10%;
-  animation-delay: 0.2s;
-  cursor: pointer;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.overlay.visible .menu {
+  opacity: 1;
+  transition-delay: 0.5s;
 }
 
 .menu ul {
