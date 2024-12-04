@@ -85,14 +85,6 @@ const App = () => {
     return (
         <div className="page-container">
             {renderPage()}
-            <button onClick={() => {
-                localStorage.clear();
-                setUserName('');
-                setWeatherLocation('');
-                setPage('name');
-            }}>
-                Reset
-            </button>
         </div>
     );
 };

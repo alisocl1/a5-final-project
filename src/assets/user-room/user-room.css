@@ -1,14 +1,16 @@
 .room-container {
+    background-color: #cfcfcf;
     position: relative;
     width: 100vw;
     height: 100vh;
+    overflow: auto;
 }
 
 .header {
     position: relative;
     font-family: 'Quicksand';
     font-size: clamp(35px, 5vw, 60px);
-    color: rgb(43, 43, 43);
+    color: rgb(255, 255, 255);
     white-space: nowrap;
     display: flex;
     margin-top: 10%;

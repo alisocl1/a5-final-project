@@ -16,6 +16,10 @@ function Overlay({ onNavigate, isMenuVisible }) {
         return () => clearTimeout(timer);
     }, [isMenuVisible]);
 
+    if (!isMenuVisible && !isSlidingOut) {
+        return null; // Completely remove the menu from the DOM
+    }
+
     return (
         <div>
             {/* black overlay */}
