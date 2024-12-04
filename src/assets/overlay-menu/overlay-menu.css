@@ -6,17 +6,20 @@
   height: 0;
   background-color: #333; /* Menu background color */
   border-radius: 50%;
-  transition: width 0.8s ease-in-out, height 0.8s ease-in-out, transform 0.8s ease-in-out;
+  transition: width 0.5s ease-in-out, height 0.5s ease-in-out, transform 0.5s ease-in-out;
   z-index: 5;
   transform-origin: top right; /* Scale from the top-right corner */
-  transform: translate(26.5%, -48%);
+  transform: translate(26.5%, -48.5%);
 }
 
 /* When visible, the circle expands */
 .overlay.visible {
   width: 200vw;
   height: 200vw;
-  
+}
+
+.overlay:not(.visible) {
+  transition-delay: 0.2s;
 }
 
 .menu {
@@ -25,11 +28,12 @@
   left: 50%;
   text-align: center;
   opacity: 0;
-  transition: opacity 0.5s ease-in-out;
+  transition: opacity 0.3s ease-in-out;
 }
 
 .overlay.visible .menu {
   opacity: 1;
+  transition-delay: 0.5s;
 }
 
 .menu ul {
