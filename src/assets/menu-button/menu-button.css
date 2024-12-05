@@ -1,11 +1,9 @@
 .menu-container {
-  position: static;
+  position: relative;
   display: flex;
   align-items: center;
   top: 0;
   right: 0;
-  margin-top: 7%;
-  margin-right: 10%;
   z-index: 10;
 }
 

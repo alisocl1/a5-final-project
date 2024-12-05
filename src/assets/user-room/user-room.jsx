@@ -7,12 +7,14 @@ import './user-room.css'
 const UserRoom = ({ userName, userLocation, onButtonClick, onNavigate, isMenuVisible }) => {
     return (
         <div className="room-container">
-            <div className="head">
+            <div className="head-container">
                 <h1 className="header">hello, {userName}</h1>
                 <MenuButton onButtonClick={onButtonClick} />
+                <Overlay onNavigate={onNavigate} isMenuVisible={isMenuVisible} />
             </div>
-            <Overlay onNavigate={onNavigate} isMenuVisible={isMenuVisible} />
-            {/*  <WeatherWidget location={userLocation}/> */}
+            {/* <div className="weather-container">
+                <WeatherWidget location={userLocation}/>
+            </div> */}
             <div>
                 <Calendar />
             </div>
