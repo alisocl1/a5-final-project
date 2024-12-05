@@ -47,7 +47,7 @@ const WeatherWidget = ({ location }) => {
             if (!location) return;
             console.log('Weather Data: ', location)
             setLoading(true);
-            // const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&units=metric&appid=${apiKey}`;
+            const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&units=metric&appid=${apiKey}`;
 
             try {
                 const response = await axios.get(apiURL);

@@ -1,14 +1,14 @@
 .room-container {
     background-color: #cfcfcf;
-    position: relative;
     width: 100vw;
     height: 100vh;
     overflow: auto;
 }
 
-.head{
+.head-container{
     display: flex;
     justify-content: space-between;
+    margin: 15vh 10vw 5vh 10vw;
 }
 
 .header {
@@ -18,11 +18,11 @@
     color: rgb(255, 255, 255);
     white-space: nowrap;
     display: flex;
-    margin-top: 10%;
-    margin-left: 10%;
 }
 
-.weather-widget {
-    max-height: 40vh;
-    z-index: 1;
+.weather-container {
+    display: flex;
+    justify-content: space-between;
+    margin-left: 10vw;
+    margin-right: 10vw;
 }
