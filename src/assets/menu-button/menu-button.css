@@ -1,5 +1,5 @@
 .menu-container {
-  position: fixed;
+  position: static;
   display: flex;
   align-items: center;
   top: 0;
@@ -60,7 +60,7 @@
 }
   
 .menu-icon {
-  height: 2.3px;
+  height: 3px;
   width: 27px;
   background-color: #ffffff;
   border-radius: 5px;

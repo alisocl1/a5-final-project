@@ -10,12 +10,14 @@
   z-index: 5;
   transform-origin: top right; /* Scale from the top-right corner */
   transform: translate(26.5%, -48.5%);
+  pointer-events: none;
 }
 
 /* When visible, the circle expands */
 .overlay.visible {
   width: 200vw;
   height: 200vw;
+  pointer-events: auto;
 }
 
 .overlay:not(.visible) {
