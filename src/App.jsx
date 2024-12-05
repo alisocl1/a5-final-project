@@ -83,9 +83,7 @@ const App = () => {
             case 'your room':
                 return (
                     <div className={`fade ${fadeClass}`}>
-                        <MenuButton onButtonClick={toggleMenu} />
-                        <Overlay onNavigate={navPage} isMenuVisible={isMenuVisible} />
-                        <UserRoom userName={userName} userLocation={userLocation} />
+                        <UserRoom userName={userName} userLocation={userLocation} onButtonClick={toggleMenu} onNavigate={navPage} isMenuVisible={isMenuVisible}/>
                     </div>
                 );
             default:

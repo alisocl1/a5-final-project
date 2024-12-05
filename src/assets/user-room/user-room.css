@@ -6,6 +6,11 @@
     overflow: auto;
 }
 
+.head{
+    display: flex;
+    justify-content: space-between;
+}
+
 .header {
     position: relative;
     font-family: 'Quicksand';
