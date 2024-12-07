@@ -1,9 +1,10 @@
 .menu-container {
-  position: relative;
+  position: absolute;
   display: flex;
   align-items: center;
   top: 0;
   right: 0;
+  margin: 12vh 10vw 5vh 10vw;
   z-index: 10;
 }
 
@@ -16,7 +17,6 @@
 }
 
 .menu-button {
-  padding: 10px 10px;
   background-color: transparent;
   width: 60px;
   height: 60px;
@@ -28,7 +28,8 @@
   display: flex;
   flex-direction: column;
   opacity: 1;
-  transition: background-color 0.3s ease, transform 0.2s ease;
+  background-color: #000c02;
+  transition: ease, transform 0.2s ease;
 }
   
 .menu-border {
@@ -40,7 +41,7 @@
 
 .menu-border circle {
   fill: none;
-  stroke: #b6b6b6;
+  stroke: #cbceff;
   stroke-width: 4.5;
   stroke-dasharray: 296;
   stroke-dashoffset: 296;
@@ -58,41 +59,38 @@
 }
   
 .menu-icon {
-  height: 3px;
+  height: 2.5px;
   width: 27px;
-  background-color: #ffffff;
+  background-color: rgb(236, 236, 236);
   border-radius: 5px;
-  margin: 2px 0;
+  margin: 2.5px 0;
   display: block;
   transition: background-color 0.3s ease, transform 0.3s ease, margin 0.3s ease;
   z-index: 10;
 }
 
 .menu-button.spin-to .menu-icon:nth-child(1) {
-  transform: translateY(2.2px) translateX(6.5px) rotate(45deg);
+  transform: translateY(3px) translateX(8px) rotate(45deg);
   width: 13px;
 }
 
 .menu-button.spin-to .menu-icon:nth-child(3) {
-  transform: translateY(-2.2px) translateX(6.5px) rotate(-45deg);
+  transform: translateY(-3px) translateX(8px) rotate(-45deg);
   width: 13px;
 }
 
 .menu-button.spin-to:hover .menu-icon {
-  margin: 2px 0;
+  margin: 2.5px 0;
 }
 
 .menu-button:hover .menu-icon {
-  margin: 3px 0;
+  margin: 3.5px 0;
 }
 
 .menu-button .menu-icon {
   transition: background-color 0.3 ease, transform 0.3s ease, margin 0.3s ease;
 }
 
-.menu-button:hover {
-  background-color: #333;
-}
 
 @keyframes drawBorder {
   from {

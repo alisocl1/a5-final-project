@@ -1,13 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './menu-button.css'
 
-const MenuButton = ( { onButtonClick } ) => {
+const MenuButton = ( { onButtonClick, resetMenu } ) => {
     const [isOpen, setIsOpen] = useState(false);
-    const [spinTo, setSpinTo] = useState(false)
-    
+    const [spinTo, setSpinTo] = useState(false);
+
     const handleButtonClick = () => {
         setIsOpen(!isOpen);
-        setSpinTo(isOpen);
+        setSpinTo(true);
         onButtonClick();
     };
 

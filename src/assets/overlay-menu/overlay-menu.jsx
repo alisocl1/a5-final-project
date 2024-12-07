@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from 'react';
 import './overlay-menu.css';
 
 const Overlay = ({ onNavigate, isMenuVisible }) => {

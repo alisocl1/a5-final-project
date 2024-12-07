@@ -4,7 +4,7 @@
   right: 12%; /* Start from the right */
   width: 0;
   height: 0;
-  background-color: #333; /* Menu background color */
+  background-color: #000c02; /* Menu background color */
   border-radius: 50%;
   transition: width 0.5s ease-in-out, height 0.5s ease-in-out, transform 0.5s ease-in-out;
   z-index: 5;
@@ -15,8 +15,8 @@
 
 /* When visible, the circle expands */
 .overlay.visible {
-  width: 200vw;
-  height: 200vw;
+  width: 212vw;
+  height: 212vw;
   pointer-events: auto;
 }
 
@@ -50,7 +50,7 @@
   font-family: 'Quicksand';
   font-weight: 510;
   font-size: 5vw;
-  color: white;
+  color: rgb(236, 236, 236);
   cursor: pointer;
   transition: transform 0.5s ease, color 0.5s ease;
 }

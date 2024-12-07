@@ -7,12 +7,14 @@
     width: 100vw;
     padding: 20px;
     text-align: center;
-    background-image: url('https://i.pinimg.com/originals/3d/d2/86/3dd286a8c85ad38a5d7e0aa60139ac08.gif');
+    background-image: url('https://wallpapers.com/images/hd/blue-ipad-gaf5plgcssyszwq2.jpg');
+    /* background-image: url('https://i.pinimg.com/originals/3d/d2/86/3dd286a8c85ad38a5d7e0aa60139ac08.gif'); */
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     position: relative;
     overflow: hidden;
+    animation: backgroundMove 10s infinite linear;
 }
 
 .user-location-container::before {
@@ -55,11 +57,10 @@
 
 label {
     display: block;
-    margin: 10 px 0;
     padding: 10px;
     color: rgb(236, 236, 236);
     font-weight: 1000;
-    font-size: 20px;
+    font-size: 23px;
     z-index: 2;
 }
 
@@ -69,7 +70,7 @@ label {
     border: none;
     outline: none;
     background: none;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 500;
     color: white;
     border-bottom: 2px solid rgb(236, 236, 236);
@@ -80,7 +81,7 @@ label {
 }
 
 select:hover {
-    border-bottom: 2px solid rgb(43, 43, 43);
+    border-bottom: 2px solid rgb(0, 12, 2);
 }
 
 select:disabled {
@@ -95,6 +96,8 @@ select option {
     color: black;
 }
 
+
+
 @media (max-width: 600px) {
     .user-location-container {
         padding: 10px;
@@ -108,11 +111,37 @@ select option {
         align-items: center;
     }
 
+    .dropdown-group {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .next-button {
+        margin-top: 15px;
+    }
+
     label {
+        font-size: 16px;
+    }
+
+    .custom-dropdown {
         font-size: 16px;
     }
 
     select {
         width: 100%;
+    }
+}
+
+@keyframes backgroundMove {
+    0% {
+        background-position: center;
+    }
+    50% {
+        background-position: 100% 100%;
+    }
+    100% {
+        background-position: center;
     }
 }

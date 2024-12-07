@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import UserNameInput from './assets/user-name/user-name.jsx';
 import UserLocation from './assets/user-location/user-location.jsx';
-import Overlay from './assets/overlay-menu/overlay-menu.jsx';
-import MenuButton from './assets/menu-button/menu-button.jsx';
 import UserRoom from './assets/user-room/user-room.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
@@ -72,7 +70,7 @@ const App = () => {
             case 'your room':
                 return (
                     <div className={`fade ${fadeClass}`}>
-                        <UserRoom userName={userName} userLocation={userLocation} onButtonClick={toggleMenu} onNavigate={navPage} isMenuVisible={isMenuVisible}/>
+                        <UserRoom userName={userName} userLocation={weatherLocation} onButtonClick={toggleMenu} onNavigate={navPage} isMenuVisible={isMenuVisible}/>
                     </div>
                 );
             default:

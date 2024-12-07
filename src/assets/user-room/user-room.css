@@ -1,28 +1,22 @@
 .room-container {
-    background-color: #cfcfcf;
+    background-image: url('https://applescoop.org/image/wallpapers/mac/macos-12-monterey-stock-default-dark-17-09-2024-1726606874.jpg');
+    /* background-image: url('https://4kwallpapers.com/images/wallpapers/macos-monterey-stock-blue-dark-mode-layers-5k-2560x2560-5895.jpg'); */
     width: 100vw;
     height: 100vh;
     overflow: auto;
-}
-
-.head-container{
-    display: flex;
-    justify-content: space-between;
-    margin: 15vh 10vw 5vh 10vw;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: 3;
 }
 
 .header {
     position: relative;
     font-family: 'Quicksand';
     font-size: clamp(35px, 5vw, 60px);
-    color: rgb(255, 255, 255);
+    color: rgb(236, 236, 236);
     white-space: nowrap;
     display: flex;
-}
-
-.weather-container {
-    display: flex;
-    justify-content: space-between;
-    margin-left: 10vw;
-    margin-right: 10vw;
+    margin: 20vh 10vw 5vh 10vw;
+    z-index: 3;
 }

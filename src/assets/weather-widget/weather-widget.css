@@ -1,38 +1,97 @@
 .weather-widget {
     position: static;
-    bottom: 0;
-    right: 0;
-    margin-bottom: 2%;
-    margin-right: 2%;
-    background-color: rgb(201, 243, 255);
     border-radius: 8px;
-    padding: 2em;
-    width: 20vw;
-    max-width: 350px;
+    padding: 3vh;
+    width: 325px;
+    margin: 10vh 10vw;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Quicksand';
     display: flex;
     flex-direction: column;
     align-items: center;
+    color: white;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
-.weather-widget h2 {
-    font-size: 20px;
-    color: black;
+.weather-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
 }
 
-.weather-widget .weather-icon {
-    width: 50px;
-    height: 50px;
-    margin: 10px 0;
+.weather-top-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.location {
+    font-size: 15px;
+    font-weight: bold;
+    color: rgb(236, 236, 236);
+}
+
+.weather-description {
+    font-size: 15px;
+    font-weight: 500;
+    color: rgb(236, 236, 236);
+    text-align: right;
+}
+
+.weather-middle-row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 10px;
+}
+
+.temperature {
+    font-size: 35px;
+    font-weight: bold;
+    color: rgb(236, 236, 236);
 }
 
 .weather-icon {
-    font-size: 30px;
-    color: lightslategrey;
+    font-size: 40px;
+    color: rgb(236, 236, 236);
 }
 
-h1 {
-    font-size: 2rem;
-    color: black;
+.weather-bottom-row {
+    display: flex;
+    justify-content: space-between;
+    color: rgb(236, 236, 236);
+    align-items: center;
+    width: 100%;
 }
+
+.weather-detail {
+    flex-grow: 1;
+    display: flex;
+    font-size: 15px;
+    color: rgb(236, 236, 236);
+    font-weight: 500;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    border-radius: 50px;
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 2px;
+    margin: 0 3px;
+    white-space: nowrap;
+}
+
+.weather-details-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.weather-detail i {
+    margin-right: 15px;
+}
+

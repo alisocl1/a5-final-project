@@ -13,39 +13,41 @@ const WeatherWidget = ({ location }) => {
         return (celcius * 9/5) + 32;
     };
 
+    const windSpeedConversion = (mps) => (mps * 2.23694).toFixed(1);
+
+    const precipitation = weatherData && weatherData.rain ? weatherData.rain['1h'] : 0;
+
+    const getBackgroundImage = (weatherIcon) => {
+        if (weatherIcon.includes('d')) {
+            return 'url(https://auroralabsnorway.com/blog/wp-content/uploads/2020/05/sun-3588618_1920-1200x800.jpg)';
+        } else {
+            return 'url(https://t3.ftcdn.net/jpg/00/92/57/76/360_F_92577670_M5qmsjtBd36X6YD7b2zUwmqqUXOmwVn9.jpg)';
+        }
+    };
+
     const getIcon = (weatherIcon) => {
         switch (weatherIcon) {
-            case '01d':
-                return 'fa-sun';
-            case '01n':
-                return'fa-moon';
+            case '01d': return 'fa-sun';
+            case '01n': return'fa-moon';
             case '02d':
-            case '02n':
-                return 'fa-cloud-sun';
+            case '02n': return 'fa-cloud-sun';
             case '03d':
-            case '03n':
-                return 'fa-cloud';
+            case '03n': return 'fa-cloud';
             case '04d':
-            case '04n':
-                return 'fa-cloud-meatball';
+            case '04n': return 'fa-cloud-meatball';
             case '09d':
-            case '09n':
-                return'fa-cloud-showers-heavy';
+            case '09n': return'fa-cloud-showers-heavy';
             case '10d':
-            case '10n':
-                return 'fa-cloud-rain';
+            case '10n': return 'fa-cloud-rain';
             case '50d':
-            case '50n':
-                return 'fa-smog';
-            default:
-                return 'fa-question';
+            case '50n': return 'fa-smog';
+            default: return 'fa-question';
         }
     };
 
     useEffect(() => {
         const fetchWeather = async () => {
             if (!location) return;
-            console.log('Weather Data: ', location)
             setLoading(true);
             const apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${encodeURIComponent(location)}&units=metric&appid=${apiKey}`;
 
@@ -54,39 +56,67 @@ const WeatherWidget = ({ location }) => {
                 setWeatherData(response.data);
                 setError('');
             } catch (err) {
-                setError('Failed to fetch weather data');
+                setError('Failed to fetch weather data.')
                 setWeatherData(null);
             }
-            setLoading(false)
+            setLoading(false);
         };
         fetchWeather();
-    }, [location]);
+    }, [location])
+
+    if (loading) { return <p className="weather-loading">loading...</p>; }
+    if (error) { return <p className="weather-error">{error}</p>; }
 
     return (
-        <div className="weather-widget">
-            {weatherData ? (
-                <div>
-                    <h2>
-                        <i className={`fa ${getIcon(weatherData.weather[0].icon)} weather-icon`} />
-                    </h2>
-                    { loading ? (
-                        <p>loading...</p>
-                    ) : error ? (
-                        <p>{error}</p>
-                    ) : (
-                        <div className="weather-info">
-                            <p>temperature: {convertToFahrenheit(weatherData.main.temp).toFixed(1)}°F</p>
-                            <p>weather: {weatherData.weather[0].description}</p>
-                            <p>humidity: {weatherData.main.humidity}%</p>
-                            <p>wind speed: {weatherData.wind.speed} m/s</p>
+        <div className="weather-widget" style={{ backgroundImage: weatherData ? getBackgroundImage(weatherData.weather[0].icon) : ''}}>
+            {weatherData && (
+                <div className="weather-container">
+
+                    {/* top row of weather widget */}
+                    <div className="weather-top-row">
+                        <p className="location">
+                            <i className="map-marker"></i> {weatherData.name}, {' '}
+                            {weatherData.sys.country}
+                        </p>
+                        <p className="weather-description">
+                            {weatherData.weather[0].description}
+                        </p>
+                    </div>
+                
+                    {/* middle row of weather widget */}
+                    <div className="weather-middle-row">
+                        <div className="temperature">
+                            {convertToFahrenheit(weatherData.main.temp).toFixed(1)}°F
                         </div>
-                    )}
+                        <div className="weather-icon">
+                            <i className={`fa ${getIcon(weatherData.weather[0].icon)} weather-icon`} />
+                        </div>
+                    </div>
+
+                    {/* bottom row of weather widget */}
+                    <div className="weather-bottom-row">
+                        <div class="weather-details-container">
+
+                            {/* rain */}
+                            <div className="weather-detail"> 
+                                <i className="fa fa-cloud-showers-heavy"></i>
+                                <span>{precipitation > 0 ? `${precipitation}mm` : 'no rain'}</span>
+                            </div>
+
+                            {/* humidity */}
+                            <div className="weather-detail">
+                                <i className="fa fa-tint"></i> 
+                                <span>{weatherData.main.humidity}%</span>
+                            </div>
+
+                            {/* wind */}
+                            <div className="weather-detail">
+                                <i className="fa fa-wind"></i> 
+                                <span>{windSpeedConversion(weatherData.wind.speed)} mph</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            ) : (
-                <p>
-                    {getIcon('04n').icon}
-                    loading weather data...<br />
-                    uncomment 'apiURL' to display data.                </p>
             )}
         </div>
     );
