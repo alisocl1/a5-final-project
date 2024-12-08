@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
 
 const App = () => {
+
     const [userName, setUserName] = useState(localStorage.getItem('userName') || '');
     const [weatherLocation, setWeatherLocation] = useState(localStorage.getItem('weatherLocation') || '');
     

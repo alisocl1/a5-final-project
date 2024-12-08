@@ -7,7 +7,6 @@ const Calendar = () => {
   
   // Initializing events state from localStorage (if available)
   const [events, setEvents] = useState(() => {
-    // Check if there are any saved events in localStorage
     const savedEvents = localStorage.getItem('events');
     return savedEvents ? JSON.parse(savedEvents) : [];
   });
@@ -65,9 +64,11 @@ const Calendar = () => {
       </button>
 
       <FullCalendar
+        height='75vw'
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
-        events={events} // Directly use the events array
+        dayMaxEvents={true}
+        events={events}
         eventClick={handleEventClick}
         headerToolbar={{
           left: 'prev,next today',
@@ -94,21 +95,25 @@ const Calendar = () => {
 // Modal for adding a new event
 const AddEventModal = ({ onClose, onAddEvent }) => {
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
+  const [start, setStart] = useState('');
+  const [end, setEnd] = useState('');
   const [description, setDescription] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (title && date) {
-      onAddEvent({ title, date, time, description });
-      setTitle('');
-      setDate('');
-      setTime('');
-      setDescription('');
-    } else {
-      alert('Title and Date are required.');
+    if (!title || !start || !end) {
+      alert('All fields are required.');
+      return;
     }
+    if (new Date(start) >= new Date(end)) {
+      alert('End time must be after start time.');
+      return;
+    }
+    onAddEvent({ title, start, end, description });
+    setTitle('');
+    setStart('');
+    setEnd('');
+    setDescription('');
   };
 
   return (
@@ -124,17 +129,18 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
             required
           />
           <input
-            type="date"
-            placeholder="Event Date (required)"
-            value={date}
-            onChange={(e) => setDate(e.target.value)}
+            type="datetime-local"
+            placeholder="Start Date & Time (required)"
+            value={start}
+            onChange={(e) => setStart(e.target.value)}
             required
           />
           <input
-            type="time"
-            placeholder="Event Time (optional)"
-            value={time}
-            onChange={(e) => setTime(e.target.value)}
+            type="datetime-local"
+            placeholder="End Date & Time (required)"
+            value={end}
+            onChange={(e) => setEnd(e.target.value)}
+            required
           />
           <textarea
             placeholder="Event Description (optional)"
@@ -154,6 +160,7 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
     </div>
   );
 };
+
 
 // Modal for event details
 const EventOverlay = ({ event, onClose, onDelete }) => {

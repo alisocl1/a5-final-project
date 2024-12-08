@@ -4,7 +4,7 @@
   right: 12%; /* Start from the right */
   width: 0;
   height: 0;
-  background-color: #000c02; /* Menu background color */
+  background-color: #16203d; /* Menu background color */
   border-radius: 50%;
   transition: width 0.5s ease-in-out, height 0.5s ease-in-out, transform 0.5s ease-in-out;
   z-index: 5;

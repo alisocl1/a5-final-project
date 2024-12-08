@@ -10,6 +10,12 @@
     z-index: 3;
 }
 
+.head-container{
+    display: flex;
+    justify-content: space-between;
+    background-size: cover;
+}
+
 .header {
     position: relative;
     font-family: 'Quicksand';

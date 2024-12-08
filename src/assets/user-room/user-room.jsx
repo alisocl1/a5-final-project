@@ -23,9 +23,11 @@ const UserRoom = ({ userName, userLocation, onButtonClick, onNavigate, isMenuVis
     
     return (
         <div className="room-container">
-            <h1 className="header">hello, {userName}</h1>
-            <MenuButton onButtonClick={onButtonClick} resetMenu={resetMenu} />
-            <Overlay onNavigate={handleNavigation} isMenuVisible={isMenuVisible} />
+            <div className="head-container">
+                <h1 className="header">hello, {userName}</h1>
+                <MenuButton onButtonClick={onButtonClick} resetMenu={resetMenu} />
+                <Overlay onNavigate={handleNavigation} isMenuVisible={isMenuVisible} />
+            </div>
             <div>
                 <WeatherWidget location={userLocation}/>
             </div>

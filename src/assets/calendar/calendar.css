@@ -1,13 +1,78 @@
 .calendar-container {
   font-family: 'Quicksand';
-  justify-content: center;
   max-width: 80vw;
   margin: 10vh 10vw;
   background-color: #ffffff;
   border: 1px solid #ccc;
-  padding: 20px;
+  padding: 5vh 3vw;
   border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
+}
+
+.fc-daygrid-day-frame {
+  height: 10vw;
+}
+
+.fc-theme-standard td, 
+.fc-theme-standard th {
+  border: none;
+}
+
+.fc-theme-standard .fc-scrollgrid {
+  border: none;
+}
+
+.fc-daygrid-day {
+  border: none;
+  border-radius: 15px;
+  overflow: visible;
+  background-color: #f9f9f9;
+  /* box-shadow: 0px 0px 1px 1px lightblue; */
+}
+
+.fc-daygrid-day-frame {
+  background-color: #f9f9f9;
+  border-radius: 15px;
+  box-shadow: 0px 0px 0px 1px lightblue;
+}
+
+.fc-daygrid-day-events{
+  margin-left: 10px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+}
+
+.fc-event {
+  font-size: 2vh;
+  padding: 3px;
+  border: 1.3px solid black;
+  border-radius: 10px;
+  cursor: pointer;
+  color: black;
+}
+
+.fc-event:hover {
+  border: 1px solid black;
+  border-radius: 10px;
+  color: black;
+}
+
+.fc-daygrid-day-number {
+  position: relative;
+  top: 5px;
+  right: 10px;
+  text-decoration: none;
+  color: black
+}
+
+.fc-col-header-cell-cushion{
+  color: black;
+  text-decoration: none;
+}
+
+.fc-col-header{
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
 }
 
 /* Styles for the entire overlay (background) */
