@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { parseISO, format } from 'date-fns';
 import FullCalendar from '@fullcalendar/react'; // Import FullCalendar
 import dayGridPlugin from '@fullcalendar/daygrid'; // Plugin for month/week/day views
 import './calendar.css';
@@ -13,7 +14,6 @@ const Calendar = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
-  const [isAllDay, setIsAllDay] = useState(false);
 
   // Save events to localStorage whenever the events change
   useEffect(() => {
@@ -32,10 +32,12 @@ const Calendar = () => {
 
   // Handle event click to show event details
   const handleEventClick = (clickInfo) => {
+    console.log('clickInfo????', clickInfo)
     setSelectedEvent({
       id: clickInfo.event.id,
       title: clickInfo.event.title,
-      date: clickInfo.event.startStr,
+      start: clickInfo.event.startStr,
+      end: clickInfo.event.endStr,
       time: clickInfo.event.extendedProps.time || '',
       description: clickInfo.event.extendedProps.description || '',
     });
@@ -65,7 +67,7 @@ const Calendar = () => {
       </button>
 
       <FullCalendar
-        height='75vw'
+        height='70vw'
         plugins={[dayGridPlugin]}
         initialView="dayGridMonth"
         dayMaxEvents={true}
@@ -110,7 +112,7 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
       return;
     }
 
-    if (!isAllDay && new Date(`${date}T${time}`) > new Date(`${endDate}T${endTime}`)) {
+    if (!isAllDay && new Date(`${date}T${time}`) >= new Date(`${endDate}T${endTime}`)) {
       alert('End date and time must be after start date and time.');
       return;
     }
@@ -126,6 +128,7 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
       description,
       allDay: isAllDay,
     });
+
 
     // Reset fields and close modal
     setTitle('');
@@ -218,28 +221,58 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
   );
 };
 
+function formatEventTime(startTime, endTime) {
+  if (!endTime) {
+    const parsedStartTime = parseISO(startTime);
+    const startDateFormatted = format(parsedStartTime, "EEEE, MMMM d");
+    return `${startDateFormatted} ⋅ All Day`;
+  }
+
+  const parsedStartTime = parseISO(startTime);
+  const parsedEndTime = parseISO(endTime);
+
+  // Format the start date and time
+  const startDateFormatted = format(parsedStartTime, "MMMM d");
+  const startTimeFormatted = format(parsedStartTime, "p");
+
+  // Format the end date and time
+  const endDateFormatted = format(parsedEndTime, "MMMM d");
+  const endTimeFormatted = format(parsedEndTime, "p");
+
+  // Check if the start and end dates are the same
+  if (startDateFormatted === endDateFormatted) {
+    // If the dates are the same, return a simple format
+    return `${startDateFormatted} ⋅ ${startTimeFormatted} – ${endTimeFormatted}`;
+  } else {
+    // If the dates are different, format as: "December 8 ⋅ 10:11 PM – December 12 ⋅ 10:12 PM"
+    return `${startDateFormatted} ⋅ ${startTimeFormatted} – ${endDateFormatted} ⋅ ${endTimeFormatted}`;
+  }
+}
 
 // Modal for event details
 const EventOverlay = ({ event, onClose, onDelete }) => {
+  const formatedEventDateTime = formatEventTime(event.start, event.end)
+
   return (
     <div className="calendar-overlay">
       <div className="event-modal">
-        <h3>Event Details</h3>
-        <p><strong>Title:</strong> {event.title}</p>
-        <p><strong>Date:</strong> {event.date}</p>
-        {event.time && <p><strong>Time:</strong> {event.time}</p>}
+        <div className="modal-header">
+          <button onClick={onClose} className="close-icon">
+            &times;
+          </button>
+        </div>
+        <h3>{event.title}</h3>
+        <p>{formatedEventDateTime}</p>
         {event.description && <p><strong>Description:</strong> {event.description}</p>}
         <div className="modal-actions">
           <button onClick={onDelete} className="delete-button">
             Delete
-          </button>
-          <button onClick={onClose} className="close-button">
-            Close
           </button>
         </div>
       </div>
     </div>
   );
 };
+
 
 export default Calendar;
