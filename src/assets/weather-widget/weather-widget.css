@@ -95,3 +95,18 @@
     margin-right: 15px;
 }
 
+.error-box {
+    color: red;
+    background-color: rgba(225, 225, 225, 0.5);
+    margin: 10vh 10vw;
+    font-family: 'Quicksand';
+    text-align: center;
+    font-weight: 600;
+}
+
+@media (max-width: 600px) {
+    .weather-widget {
+        width: auto;
+        margin: 10vh 10vw;
+    }
+}

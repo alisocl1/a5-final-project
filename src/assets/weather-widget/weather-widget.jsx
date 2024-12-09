@@ -65,7 +65,7 @@ const WeatherWidget = ({ location }) => {
     }, [location])
 
     if (loading) { return <p className="weather-loading">loading...</p>; }
-    if (error) { return <p className="weather-error">{error}</p>; }
+    if (error) { return <div className="error-box">{error}</div>; }
 
     return (
         <div className="weather-widget" style={{ backgroundImage: weatherData ? getBackgroundImage(weatherData.weather[0].icon) : ''}}>
