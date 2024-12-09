@@ -28,7 +28,9 @@ const UserLocation = ({
                     `http://api.geonames.org/countryInfoJSON?username=${geoNamesUsername}`
                 );
                 console.log(response.data);
-                const countryData = response.data.geonames;
+                const countryData = response.data.geonames.sort((a, b) =>
+                    a.countryName.localeCompare(b.countryName)
+                );
                 setCountries(countryData);
             } catch (err) {
                 console.error('Failed to fetch countries.')
@@ -80,7 +82,9 @@ const UserLocation = ({
             const response = await axios.get(
                 `http://api.geonames.org/childrenJSON?geonameId=${countryId}&username=${geoNamesUsername}`
             );
-            const statesData = response.data.geonames;
+            const statesData = response.data.geonames.sort((a, b) =>
+                a.name.localeCompare(b.name)
+            );
             setStates(statesData);
         } catch (err) {
             console.error('Failed to fetch states.', err);
@@ -94,7 +98,9 @@ const UserLocation = ({
             const response = await axios.get(
                 `http://api.geonames.org/childrenJSON?geonameId=${stateId}&username=${geoNamesUsername}`
             );
-            const citiesData = response.data.geonames;
+            const citiesData = response.data.geonames.sort((a, b) =>
+                a.name.localeCompare(b.name)
+            );
             setCities(citiesData);
         } catch (err) {
             console.error('Failed to fetch cities.', err);
