@@ -13,6 +13,7 @@ const Calendar = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isAllDay, setIsAllDay] = useState(false);
 
   // Save events to localStorage whenever the events change
   useEffect(() => {
@@ -42,16 +43,16 @@ const Calendar = () => {
 
   // Remove event
   const removeEvent = (eventId) => {
-    const updatedEvents = events.filter((event) => event.id !== eventId); // Filter out the deleted event
-    setEvents(updatedEvents); // Update the events state
-    localStorage.setItem('events', JSON.stringify(updatedEvents)); // Update localStorage with the new events array
-    setSelectedEvent(null); // Close the modal
+    const updatedEvents = events.filter((event) => event.id !== eventId);
+    setEvents(updatedEvents);
+    localStorage.setItem('events', JSON.stringify(updatedEvents));
+    setSelectedEvent(null);
   };
 
   const clearAllEvents = () => {
-    setEvents([]); // Clear the events state
-    localStorage.removeItem('events'); // Remove events from localStorage
-    setSelectedEvent(null); // Clear any selected event
+    setEvents([]);
+    localStorage.removeItem('events');
+    setSelectedEvent(null); 
   };
 
   return (
@@ -60,7 +61,7 @@ const Calendar = () => {
         Clear [DEBUG]
       </button>
       <button onClick={() => setIsModalOpen(true)} className="add-button">
-        Add Event
+        + Add Event
       </button>
 
       <FullCalendar
@@ -95,54 +96,113 @@ const Calendar = () => {
 // Modal for adding a new event
 const AddEventModal = ({ onClose, onAddEvent }) => {
   const [title, setTitle] = useState('');
-  const [start, setStart] = useState('');
-  const [end, setEnd] = useState('');
+  const [date, setDate] = useState('');
+  const [time, setTime] = useState('');
+  const [endDate, setEndDate] = useState('');
+  const [endTime, setEndTime] = useState('');
   const [description, setDescription] = useState('');
+  const [isAllDay, setisAllDay] = useState(false);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!title || !start || !end) {
-      alert('All fields are required.');
+    if (!title || !date || (!isAllDay && (!time || !endTime))) {
+      alert('Please fill out required fields.');
       return;
     }
-    if (new Date(start) >= new Date(end)) {
-      alert('End time must be after start time.');
+
+    if (!isAllDay && new Date(`${date}T${time}`) > new Date(`${endDate}T${endTime}`)) {
+      alert('End date and time must be after start date and time.');
       return;
     }
-    onAddEvent({ title, start, end, description });
+
+    const start = isAllDay ? date : `${date}T${time}`;
+    const end = isAllDay ? null : `${endDate}T${endTime}`;
+
+    // Add event
+    onAddEvent({
+      title,
+      start,
+      end,
+      description,
+      allDay: isAllDay,
+    });
+
+    // Reset fields and close modal
     setTitle('');
-    setStart('');
-    setEnd('');
+    setDate('');
+    setTime('');
+    setEndDate('');
+    setEndTime('');
     setDescription('');
+    setisAllDay(false);
+    onClose();
   };
 
   return (
     <div className="calendar-overlay">
       <div className="event-modal">
-        <h3>Add New Event</h3>
+        <div className="modal-header">
+          <button onClick={onClose} className="close-icon">
+            &times;
+          </button>
+        </div>
         <form onSubmit={handleSubmit}>
-          <input
+          <input className='input-title'
             type="text"
-            placeholder="Event Title (required)"
+            placeholder="Add Title (required)"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
-          <input
-            type="datetime-local"
-            placeholder="Start Date & Time (required)"
-            value={start}
-            onChange={(e) => setStart(e.target.value)}
-            required
-          />
-          <input
-            type="datetime-local"
-            placeholder="End Date & Time (required)"
-            value={end}
-            onChange={(e) => setEnd(e.target.value)}
-            required
-          />
-          <textarea
+          <div>
+            <input className='input-date'
+              type="date"
+              placeholder="Start Date (required)"
+              value={date}
+              onChange={(e) => {
+                const newStartDate = e.target.value;
+                setDate(newStartDate);
+                if (!endDate || newStartDate > endDate) {
+                  setEndDate(newStartDate);
+                }
+              }}
+              required
+            />
+            {!isAllDay && (
+              <input className='input-date'
+                type="time"
+                placeholder="Start Time (required)"
+                value={time}
+                onChange={(e) => setTime(e.target.value)}
+                required
+              />
+            )}
+          </div>
+          {!isAllDay && (
+            <div>
+              <div>to</div>
+              <input className='input-date'
+                type="date"
+                placeholder="End Date (required)"
+                value={endDate}
+                onChange={(e) => setEndDate(e.target.value)}
+                required
+              />
+              <input className='input-date'
+                type="time"
+                placeholder="End Time (required)"
+                value={endTime}
+                onChange={(e) => setEndTime(e.target.value)}
+                required
+              />
+            </div>
+          )}
+          <label class="check-container">
+            <input type="checkbox" checked={isAllDay} onChange={() => setisAllDay(!isAllDay)} />
+            <span class="checkmark"></span>
+            <span class="all-day">All-Day Event</span>
+          </label>
+          <textarea className='input-description'
             placeholder="Event Description (optional)"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
@@ -150,9 +210,6 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
           <div className="modal-actions">
             <button type="submit" className="add-button">
               Add Event
-            </button>
-            <button onClick={onClose} className="close-button">
-              Cancel
             </button>
           </div>
         </form>

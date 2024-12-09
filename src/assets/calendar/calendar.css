@@ -91,16 +91,27 @@
 
 /* Modal container */
 .event-modal {
-  background: white;
-  padding: 20px;
+  display: block;
+  position: fixed;
+  background-color: white;
+  border: 1px solid #ccc;
   border-radius: 8px;
-  width: 300px;
-  text-align: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 400px;
+  max-width: 90%;
+  padding: 30px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: flex-end;
+  border-bottom: 1px solid #000000;
+  font-size: 16px;
 }
 
 /* Buttons */
 .add-button {
-  background: green;
+  background-image: linear-gradient(to right, rgb(39, 57, 114) , rgb(104, 110, 183));
   color: white;
   border: none;
   padding: 10px 20px;
@@ -109,26 +120,115 @@
   margin-bottom: 10px;
 }
 
-.close-button {
-  background: gray;
-  color: white;
+.close-icon {
+  margin-bottom: 10px;
+  padding: 0px;
+  background: none;
   border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
+  font-size: 30px;
   cursor: pointer;
+  color: #333;
+  line-height: 15px;
 }
 
-.delete-button {
-  background: red;
-  color: white;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 5px;
-  margin-right: 10px;
-  cursor: pointer;
+.close-icon:hover {
+  color: rgb(104, 110, 183);
 }
 
 /* Modal actions container */
 .modal-actions {
   margin-top: 20px;
+}
+
+/* Form styles */
+.input-title{
+  font-weight: bold;
+  color: #000000;
+  width: 100%;
+  background:none;
+  border:none;
+  border-bottom: 1px solid #ccc;
+  font-size: 25px;
+  margin-bottom: 20px;
+}
+
+.input-title:focus, .input-date:focus, .input-description:focus{
+  outline: none;
+  border-bottom: 3px solid rgb(104, 110, 183);
+  caret-color: rgb(91, 99, 189);
+}
+
+.input-title::placeholder {
+  color: #5f5f5f;
+  font-style: italic;
+}
+
+.input-date, .input-description{
+  padding: 5px;
+  border-radius: 5px;
+  background:#e2e2e2;
+  color:#333;
+  margin-right: 10px;
+  border:none;
+}
+
+.input-date:hover, .input-description:hover{
+  background:#ccc;
+}
+
+.input-description{
+  margin-top: 10px;
+}
+
+.input-description:focus{
+  background:#e2e2e2;
+}
+
+
+.check-container {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.check-container input {
+  display: none; /* Hide the default checkbox */
+}
+
+.check-container .checkmark {
+  border: 2px solid rgb(104, 110, 183);
+  width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  position: relative;
+  margin-right: 10px;
+}
+
+
+
+.check-container input:checked + .checkmark {
+  background-color: rgb(104, 110, 183);
+}
+
+.check-container input:checked + .checkmark::after {
+  content: '';
+  position: absolute;
+  top: 0px;
+  left: 4px;
+  width: 7px;
+  height: 12px;
+  border: solid #ffffff;
+  border-width: 0 3px 3px 0;
+  transform: rotate(45deg);
+}
+
+.all-day{
+  color:#333;
+  font-weight: normal;
+  font-size: 16px;
+  pointer-events: none;
+}
+
+.input-description{
+  width: 100%;
 }
