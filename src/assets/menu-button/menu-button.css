@@ -1,11 +1,11 @@
 .menu-container {
-  position: relative;
+  position: absolute;
   display: flex;
   align-items: center;
   top: 3vh;
   right: 0;
   margin: 12vh 10vw 5vh 10vw;
-  z-index: 10;
+  z-index: 6;
 }
 
 .menu-container .spin-to {
