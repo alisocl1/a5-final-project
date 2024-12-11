@@ -201,10 +201,10 @@
 
 .dropdown div {
     cursor: pointer;
+    width: 100%;
     padding: 8px 15px;
     font-size: 15px;
-    background-color: transparent;
-    width: 100%;
+    /* background-color: transparent; */
 }
 
 .dropdown div:hover {
@@ -219,12 +219,7 @@
 .input-and-icon {
     display: flex;
     align-items: center;
-    padding: 0;
     gap: 10px;
-}
-
-.input-and-icon input {
-    flex-grow: 1;
 }
 
 .input-and-icon svg {
