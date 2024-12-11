@@ -95,7 +95,7 @@ const WeatherWidget = ({ location }) => {
 
                     {/* bottom row of weather widget */}
                     <div className="weather-bottom-row">
-                        <div class="weather-details-container">
+                        <div className="weather-details-container">
 
                             {/* rain */}
                             <div className="weather-detail"> 

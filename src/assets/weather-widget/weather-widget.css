@@ -1,9 +1,11 @@
 .weather-widget {
-    position: static;
     border-radius: 8px;
     padding: 3vh;
-    width: 325px;
-    margin: 10vh 10vw;
+    min-width: 350px;
+    height: 170px;
+    max-width: 80vw;
+    margin: 10vh;
+    margin-left: 10vw;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     font-family: 'Quicksand';
     display: flex;
@@ -104,9 +106,8 @@
     font-weight: 600;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     .weather-widget {
-        width: auto;
-        margin: 10vh 10vw;
+        margin-right: 10vw;
     }
 }

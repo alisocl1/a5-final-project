@@ -1,7 +1,9 @@
 .calendar-container {
   font-family: 'Quicksand';
   max-width: 80vw;
-  margin: 10vh 10vw;
+  margin: 10vw;
+  margin-top: 0;
+  margin-bottom: 10vh;
   background-color: #ffffff;
   border: 1px solid #ccc;
   padding: 5vh 3vw;
@@ -36,6 +38,7 @@
   background-color: #f9f9f9;
   border-radius: 15px;
   border: 1px solid #000000 !important; /* Example: Set the border color for days with events */
+  cursor: pointer;
 }
 
 .fc-daygrid-day-events{
