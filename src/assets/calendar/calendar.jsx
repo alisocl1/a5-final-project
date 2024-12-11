@@ -1,10 +1,46 @@
+import './calendar.css';
+import ColorDropdown from './color-dropdown.jsx'
 import React, { useState, useEffect } from 'react';
 import { parseISO, format } from 'date-fns';
 import FullCalendar from '@fullcalendar/react'; // Import FullCalendar
 import dayGridPlugin from '@fullcalendar/daygrid'; // Plugin for month/week/day views
-import './calendar.css';
+
+// Helper function for converting hex to rgba
+function hexToRGBA(hex, toggle) {
+  let r = 0, g = 0, b = 0;
+
+  // Parse 3-digit or 6-digit hex colors
+  if (hex.length === 4) {
+    r = parseInt(hex[1] + hex[1], 16);
+    g = parseInt(hex[2] + hex[2], 16);
+    b = parseInt(hex[3] + hex[3], 16);
+  } else if (hex.length === 7) {
+    r = parseInt(hex[1] + hex[2], 16);
+    g = parseInt(hex[3] + hex[4], 16);
+    b = parseInt(hex[5] + hex[6], 16);
+  }
+
+  if (toggle) {
+    return `rgba(${r}, ${g}, ${b}, 0.1)`;
+  }
+  else{
+    // Darken the color by multiplying each component by 0.7
+    r = Math.floor(r * 0.7);
+    g = Math.floor(g * 0.7);
+    b = Math.floor(b * 0.7);
+    
+    return `rgba(${r}, ${g}, ${b})`;
+  }
+
+}
+
+
 
 const Calendar = () => {
+  const colorPalette = [
+    '#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FF8C33', '#8C33FF',
+    '#33FFF6', '#F6FF33', '#8BFF33', '#FF3333'
+  ];
   
   // Initializing events state from localStorage (if available)
   const [events, setEvents] = useState(() => {
@@ -32,13 +68,13 @@ const Calendar = () => {
 
   // Handle event click to show event details
   const handleEventClick = (clickInfo) => {
-    console.log('clickInfo????', clickInfo)
+    console.log('clickInfo:', clickInfo)
     setSelectedEvent({
       id: clickInfo.event.id,
       title: clickInfo.event.title,
       start: clickInfo.event.startStr,
       end: clickInfo.event.endStr,
-      time: clickInfo.event.extendedProps.time || '',
+      color: clickInfo.event.backgroundColor,
       description: clickInfo.event.extendedProps.description || '',
     });
   };
@@ -57,12 +93,24 @@ const Calendar = () => {
     setSelectedEvent(null); 
   };
 
+  const handleRenderDay = (info) => {
+    const dayElement = info.el; // This is the day grid element for each day
+
+    if (info.dateStr && events.some(event => event.date === info.dateStr)) {
+      // Add a custom class if the day has events
+      dayElement.classList.add('has-event');
+    } else {
+      // Remove the class if there are no events
+      dayElement.classList.remove('has-event');
+    }
+  };
+
   return (
     <div className='calendar-container'>
       <button onClick={clearAllEvents} className="clear-button">
         Clear [DEBUG]
       </button>
-      <button onClick={() => setIsModalOpen(true)} className="add-button">
+      <button onClick={() => setIsModalOpen(true)} className="add-button" title='Add an event'>
         + Add Event
       </button>
 
@@ -73,6 +121,19 @@ const Calendar = () => {
         dayMaxEvents={true}
         events={events}
         eventClick={handleEventClick}
+        dayRender={handleRenderDay}
+        eventDidMount={(info) => {
+          
+          if (info.event.allDay) {
+            info.el.classList.add("all-day-event");
+          }
+          else{
+            info.el.style.borderColor = info.event.backgroundColor;
+            info.el.style.backgroundColor = `${hexToRGBA(info.event.backgroundColor, 1)}`;
+            info.el.style.color = `${hexToRGBA(info.event.backgroundColor, 0)}`;
+          }
+        }}
+        
         headerToolbar={{
           left: 'prev,next today',
           center: 'title',
@@ -104,6 +165,8 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
   const [endTime, setEndTime] = useState('');
   const [description, setDescription] = useState('');
   const [isAllDay, setisAllDay] = useState(false);
+  const [color, setColor] = useState('#4770ac');
+  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -127,6 +190,7 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
       end,
       description,
       allDay: isAllDay,
+      color: color,
     });
 
 
@@ -138,6 +202,7 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
     setEndTime('');
     setDescription('');
     setisAllDay(false);
+    setColor('#4770ac')
     onClose();
   };
 
@@ -151,6 +216,7 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
         </div>
         <form onSubmit={handleSubmit}>
           <input className='input-title'
+            title='Enter event title.'
             type="text"
             placeholder="Add Title (required)"
             value={title}
@@ -159,6 +225,7 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
           />
           <div>
             <input className='input-date'
+              title='Select start date.'
               type="date"
               placeholder="Start Date (required)"
               value={date}
@@ -173,6 +240,7 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
             />
             {!isAllDay && (
               <input className='input-date'
+                title='Select start time.'
                 type="time"
                 placeholder="Start Time (required)"
                 value={time}
@@ -185,6 +253,7 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
             <div>
               <div>to</div>
               <input className='input-date'
+                title='Select end date.'
                 type="date"
                 placeholder="End Date (required)"
                 value={endDate}
@@ -192,6 +261,7 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
                 required
               />
               <input className='input-date'
+                title='Select end time.'
                 type="time"
                 placeholder="End Time (required)"
                 value={endTime}
@@ -210,6 +280,9 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
+          
+          <ColorDropdown onColorSelect={setColor} />
+          
           <div className="modal-actions">
             <button type="submit" className="add-button">
               Add Event
