@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import WeatherWidget from '../weather-widget/weather-widget.jsx';
 import Calendar from '../calendar/calendar.jsx';
+import TaskList from '../task-list/task-list.jsx';
 import Overlay from '../overlay-menu/overlay-menu.jsx';
 import MenuButton from '../menu-button/menu-button.jsx';
 import './user-room.css'
@@ -28,8 +29,11 @@ const UserRoom = ({ userName, userLocation, onButtonClick, onNavigate, isMenuVis
                 <MenuButton onButtonClick={onButtonClick} resetMenu={resetMenu} />
                 <Overlay onNavigate={handleNavigation} isMenuVisible={isMenuVisible} />
             </div>
-            <div>
-                <WeatherWidget location={userLocation}/>
+            <div className="top-row-container">
+                <div className="widget-container">
+                    <WeatherWidget location={userLocation}/>
+                    <TaskList />
+                </div>
             </div>
             <div>
                 <Calendar />
