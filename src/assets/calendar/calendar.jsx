@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { parseISO, format } from 'date-fns';
 import FullCalendar from '@fullcalendar/react'; // Import FullCalendar
 import dayGridPlugin from '@fullcalendar/daygrid'; // Plugin for month/week/day views
+import interactionPlugin from '@fullcalendar/interaction';
 
 // Helper function for converting hex to rgba
 function hexToRGBA(hex, toggle) {
@@ -68,7 +69,7 @@ const Calendar = () => {
 
   // Handle event click to show event details
   const handleEventClick = (clickInfo) => {
-    console.log('clickInfo:', clickInfo)
+
     setSelectedEvent({
       id: clickInfo.event.id,
       title: clickInfo.event.title,
@@ -93,39 +94,30 @@ const Calendar = () => {
     setSelectedEvent(null); 
   };
 
-  const handleRenderDay = (info) => {
-    const dayElement = info.el; // This is the day grid element for each day
-
-    if (info.dateStr && events.some(event => event.date === info.dateStr)) {
-      // Add a custom class if the day has events
-      dayElement.classList.add('has-event');
-    } else {
-      // Remove the class if there are no events
-      dayElement.classList.remove('has-event');
-    }
-  };
-
   return (
     <div className='calendar-container'>
-      <button onClick={clearAllEvents} className="clear-button">
+      {/* <button onClick={clearAllEvents} className="clear-button">
         Clear [DEBUG]
-      </button>
-      <button onClick={() => setIsModalOpen(true)} className="add-button" title='Add an event'>
+      </button> */}
+      <button onClick={() => setIsModalOpen(true)} className="add-event-button" title='Add an event'>
         + Add Event
       </button>
 
       <FullCalendar
         height='70vw'
-        plugins={[dayGridPlugin]}
+        plugins={[dayGridPlugin, interactionPlugin]}
         initialView="dayGridMonth"
         dayMaxEvents={true}
         events={events}
         eventClick={handleEventClick}
-        dayRender={handleRenderDay}
         eventDidMount={(info) => {
-          
-          if (info.event.allDay) {
+          const event = info.event;
+          const startDate = event.startStr;
+          const endDate = event.endStr;
+          const isMultipleDays = endDate != '' && !(startDate.slice(0, 10)==endDate.slice(0, 10));
+          if (info.event.allDay || isMultipleDays) {
             info.el.classList.add("all-day-event");
+
           }
           else{
             info.el.style.borderColor = info.event.backgroundColor;
@@ -136,8 +128,7 @@ const Calendar = () => {
         
         headerToolbar={{
           left: 'prev,next today',
-          center: 'title',
-          right: 'dayGridMonth,dayGridWeek,dayGridDay',
+          right: 'title',
         }}
       />
 
@@ -334,7 +325,7 @@ const EventOverlay = ({ event, onClose, onDelete }) => {
             &times;
           </button>
         </div>
-        <h3>{event.title}</h3>
+        <h3 style={{ color: event.color }}>{event.title}</h3>
         <p>{formatedEventDateTime}</p>
         {event.description && <p><strong>Description:</strong> {event.description}</p>}
         <div className="modal-actions">

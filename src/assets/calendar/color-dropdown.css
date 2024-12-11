@@ -1,33 +1,48 @@
 .color-dropdown {
+    display: flex;
     position: relative;
-    display: inline-block;
-  }
-  
-  .color-circle {
-    width: 30px;
-    height: 30px;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background: #dee0eb;
+    padding: 10px;
+    margin-top: 10px;
+    border-radius: 8px;
+    width: 20%;
+}
+
+.color-dropdown:hover{
+    background: #ced1e0;
+}
+
+.color-circle {
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
-    cursor: pointer;
     border: 1px solid #ccc;
-  }
-  
-  .color-modal {
-    top: 40px;
+}
+
+.triangle {
+    cursor: default;
+    color: #555;
+}
+
+.color-modal {
+    position: absolute;
+    top: 0;
     left: 0;
     padding: 10px;
-    background-color: #fff;
-    border: 1px solid #ccc;
+    background-color: #e7ebf7;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 5px 0px rgba(0, 0, 0, 0.3);
     display: grid;
-    grid-template-columns: repeat(5, 30px);
+    grid-template-columns: repeat(5, 17px);
     gap: 10px;
-  }
-  
-  .color-sample {
-    width: 30px;
-    height: 30px;
+}
+
+.color-sample {
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     cursor: pointer;
-  }
-  
+}

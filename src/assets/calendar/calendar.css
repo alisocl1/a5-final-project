@@ -7,10 +7,10 @@
   padding: 5vh 3vw;
   border-radius: 8px;
   box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 /* fc styles */
-
 
 .fc-theme-standard td, 
 .fc-theme-standard th {
@@ -21,10 +21,15 @@
   border: none;
 }
 
+.fc-scroller-harness, .fc-scroller-liquid-absolute{
+  overflow: visible !important;
+}
+
 .fc-daygrid-day-frame, .fc-day-today {
   background-color: #f9f9f9;
   border-radius: 15px;
-  border: 1px solid #c5c6d8;
+  box-shadow: 0px 0px 0px 1px #c2c4e0;
+  /* border: 1px solid #c5c6d8; */
 }
 
 .has-event{
@@ -76,6 +81,11 @@
   cursor: default;
   margin-bottom: 5px;
 }
+
+.fc-daygrid-day-number:hover{
+  color: black;
+}
+
 .fc-day-today .fc-daygrid-day-number{
   color: white;
 }
@@ -87,11 +97,10 @@
   transform: translate(-50%, -50%);
   width: 25px;
   height: 25px;
-  background-color: #c5c6d8;
+  background-color: #c2c4e0;
   border-radius: 50%;
   z-index: -1;
 }
-
 
 .fc-col-header-cell-cushion{
   color: black;
@@ -110,7 +119,7 @@
   color: #000000;
   font-size: 2vh;
   font-weight: bold;
-  text-decoration: none; /* Remove underline */
+  text-decoration: none; 
 }
 
 
@@ -139,8 +148,7 @@
   overflow: auto;
   display: block;
   position: fixed;
-  background-color: white;
-  border: 1px solid #ccc;
+  background-color: #f2f4ff;
   border-radius: 8px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   width: 400px;
@@ -149,20 +157,65 @@
   padding: 30px;
 }
 
-.modal-header {
+.modal-header{
   display: flex;
   justify-content: flex-end;
   border-bottom: 1px solid #000000;
   font-size: 16px;
 }
 
+.all-day {
+  color:#333;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+/* Scroller styles */
+::-webkit-scrollbar {
+  background: none;
+  width: 7px;
+}
+
+::-webkit-scrollbar-track {
+  padding: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 6px;
+}
+
+.event-modal::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 6px;
+}
+
 /* Buttons */
-.add-button, .delete-button {
+.add-button, .add-event-button, .delete-button {
   background-image: linear-gradient(to right, #183c80 , #9a9bf0);
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
   cursor: pointer;
+  margin-bottom: 10px;
+}
+
+.fc-button{
+  font-weight: bold !important;
+  font-size: 16px !important;
+  opacity: 1 !important;
+  padding: 7px !important;
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  color: #333 !important;
+  background-color: transparent !important;
+  border: 1.5px solid #c2c4e0 !important;
+  border-radius: 8px !important;
+  margin-right: 10px !important;
+}
+
+.fc-button:hover{
+  background-color: #ebedf7 !important;
 }
 
 .delete-button{
@@ -184,8 +237,9 @@
   color: rgb(104, 110, 183);
 }
 
-/* Modal actions container */
 .modal-actions {
+  display: flex;
+  justify-content: flex-end;
   margin-top: 20px;
 }
 
@@ -215,14 +269,14 @@
 .input-date, .input-description{
   padding: 5px;
   border-radius: 5px;
-  background:#e2e2e2;
+  background:#dee0eb;
   color:#333;
   margin-right: 10px;
   border:none;
 }
 
 .input-date:hover, .input-description:hover{
-  background:#ccc;
+  background:#ced1e0;
 }
 
 .input-description{
@@ -230,7 +284,7 @@
 }
 
 .input-description:focus{
-  background:#e2e2e2;
+  background:#ced1e0;
 }
 
 
@@ -241,7 +295,7 @@
 }
 
 .check-container input {
-  display: none; /* Hide the default checkbox */
+  display: none;
 }
 
 .check-container .checkmark {
@@ -269,10 +323,11 @@
   transform: rotate(45deg);
 }
 
-.all-day-event{
-  padding-left: 7px;
-}
-
 .input-description{
   width: 100%;
+}
+
+/* Event display */
+.all-day-event{
+  padding-left: 7px;
 }
