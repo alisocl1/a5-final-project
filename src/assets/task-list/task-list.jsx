@@ -147,6 +147,7 @@ const TaskList = () => {
             </div>
             <div className="task-list">
                 {tasks.length === 0 ? (
+                    // placeholder for debugging, removeable
                     <p>no tasks available</p>
                 ) : (
                     sortTasks(tasks).map((task) => (
@@ -199,7 +200,7 @@ const TaskList = () => {
             )}
             </div>
             
-            {/* should probably have done this as a sep func (im so sorry i forgot)} */}
+            {/* should probably have done this as a sep func (im so sorry i forgot) */}
             {isFormVisible && (
                 <div className="task-form-overlay">
                     <div className="task-form-container">
