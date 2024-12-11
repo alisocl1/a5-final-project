@@ -11,10 +11,8 @@
 
 .head-container {
     display: flex;
-    position: relative;
     justify-content: space-between;
     background-size: cover;
-    z-index: 1;
 }
 
 .header {
@@ -25,7 +23,6 @@
     white-space: nowrap;
     display: flex;
     margin: 20vh 10vw 5vh 10vw;
-    z-index: 0;
 }
 
 .widget-container {
@@ -33,7 +30,6 @@
     align-items: center;
     justify-content: flex-start;
 }
-
 
 @media (max-width: 900px) {
     .widget-container {

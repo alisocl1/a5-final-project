@@ -11,6 +11,7 @@
   transform-origin: top right; /* Scale from the top-right corner */
   transform: translate(26.5%, -48.5%);
   pointer-events: none;
+  z-index: 1;
 }
 
 /* When visible, the circle expands */

@@ -75,6 +75,7 @@
     display: flex;
     align-items: center;
     cursor: pointer;
+    z-index: 0;
 }
 
 .task-checkbox-container input {
@@ -86,7 +87,6 @@
     width: 15px;
     height: 15px;
     border-radius: 4px;
-    position: relative;
 }
 
 .task-checkbox-container input:checked + .checkmark {
@@ -131,7 +131,7 @@
 
 /* Styles for task form */
 .task-form-overlay {
-    position: fixed;
+    position: fixed;;
     top: 0;
     left: 0;
     width: 100vw;
@@ -158,10 +158,6 @@
     top: 0;
     right: 0;
     text-align: right;
-}
-
-.task-form-group {
-    position: relative;
 }
 
 .task-form-group input:not([name="description"]),
