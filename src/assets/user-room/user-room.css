@@ -18,7 +18,7 @@
 .header {
     position: relative;
     font-family: 'Quicksand';
-    font-size: clamp(35px, 5vw, 60px);
+    font-size: clamp(40px, 5vw, 60px);
     color: rgb(236, 236, 236);
     white-space: nowrap;
     display: flex;
