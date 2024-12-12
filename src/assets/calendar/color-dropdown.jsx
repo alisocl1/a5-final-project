@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./color-dropdown.css";
 
-const ColorDropdown = ({ onColorSelect }) => {
+const ColorDropdown = ({ onColorSelect, currentColor }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedColor, setSelectedColor] = useState("#4770ac");
+    const [selectedColor, setSelectedColor] = useState(currentColor || "#4770ac");
     const dropdownRef = useRef(null);
     const modalRef = useRef(null);
 
@@ -47,7 +47,7 @@ const ColorDropdown = ({ onColorSelect }) => {
     return (
         <div className="color-dropdown" onClick={toggleModal} title="Select event color." ref={dropdownRef}>
             <div className="color-circle" style={{ backgroundColor: selectedColor }}></div>
-            <div class="triangle">⏷</div>
+            <div className="triangle">⏷</div>
 
 
         {isModalOpen && (

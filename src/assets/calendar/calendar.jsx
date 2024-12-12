@@ -67,12 +67,18 @@ const Calendar = () => {
     setIsModalOpen(false); // Close the modal after adding
   };
 
-  // Function to handle the "Edit" button click
+  // Handle the "Edit" button click
   const handleEditEvent = () => {
     setIsModalOpen(true);
     setIsEventOverlayOpen(false);
   };
 
+  const handleClose = () => {
+    setIsModalOpen(false);
+    setSelectedEvent(null);
+  }
+
+  // Handle updating event
   const updateEvent = (updatedEvent) => {
     setEvents((prevEvents) =>
       prevEvents.map((event) =>
@@ -92,6 +98,7 @@ const Calendar = () => {
       start: clickInfo.event.startStr,
       end: clickInfo.event.endStr,
       color: clickInfo.event.backgroundColor,
+      isAllDay: clickInfo.event.allDay,
       description: clickInfo.event.extendedProps.description || '',
     });
     setIsEventOverlayOpen(true);
@@ -150,7 +157,7 @@ const Calendar = () => {
       />
 
       {isModalOpen && (
-        <AddEventModal onClose={() => setIsModalOpen(false)} onAddEvent={addEvent} event={selectedEvent} onUpdateEvent={updateEvent}/>
+        <AddEventModal onClose={handleClose} onAddEvent={addEvent} event={selectedEvent} onUpdateEvent={updateEvent}/>
       )}
 
       {isEventOverlayOpen && selectedEvent && (
@@ -177,7 +184,7 @@ const AddEventModal = ({ onClose, onAddEvent, event, onUpdateEvent }) => {
   const [isAllDay, setIsAllDay] = useState(event ? event.allDay : false);
   const [color, setColor] = useState(event ? event.color : '#4770ac');
   
-
+  
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title || !date || (!isAllDay && (!time || !endTime))) {
@@ -202,17 +209,14 @@ const AddEventModal = ({ onClose, onAddEvent, event, onUpdateEvent }) => {
       color,
     };
 
-    // Edit existing event
+    // Update existing event
     if (event) {
-      // Update existing event
       onUpdateEvent({ id: event.id, ...eventData });
     }
-
     else {
       // Add new event
       onAddEvent(eventData);
     }
-
 
     // Reset fields and close modal
     setTitle('');
@@ -290,10 +294,10 @@ const AddEventModal = ({ onClose, onAddEvent, event, onUpdateEvent }) => {
               />
             </div>
           )}
-          <label class="check-container">
+          <label className="check-container">
             <input type="checkbox" checked={isAllDay} onChange={() => setIsAllDay(!isAllDay)} />
-            <span class="checkmark"></span>
-            <span class="all-day">All-Day Event</span>
+            <span className="checkmark"></span>
+            <span className="all-day">All-Day Event</span>
           </label>
           <textarea className='input-description'
             placeholder="Event Description (optional)"
@@ -301,7 +305,7 @@ const AddEventModal = ({ onClose, onAddEvent, event, onUpdateEvent }) => {
             onChange={(e) => setDescription(e.target.value)}
           />
           
-          <ColorDropdown onColorSelect={setColor} />
+          <ColorDropdown onColorSelect={setColor} currentColor={color} />
           
           <div className="modal-actions">
             <button type="submit" className="add-button">
