@@ -33,7 +33,7 @@ const TaskList = () => {
 
     // load tasks from local storage
     useEffect(() => {
-        const storedTasks = JSON.parse(localStorage.getItem('tasks') || []);
+        const storedTasks = JSON.parse(localStorage.getItem('tasks') || '[]');
         setTasks(storedTasks);
     }, []);
 
