@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { FaPalette } from 'react-icons/fa';
 import { Plus, Trash2, FilePenLine, CircleAlert, Palette, Sticker } from 'lucide-react';
 import './task-list.css';
@@ -42,11 +42,20 @@ const TaskList = () => {
         setTasks(storedTasks);
     }, []);
 
+    const priorityRef = useRef(null);
+    const colorRef = useRef(null);
+
+
     // closes input form when user clicks anywhere outside of it
     useEffect(() => {
         const clickOutside = (e) => {
-            if (!e.target.closest('.input-and-icon')) {
-                setDropdownVisible({ priority : false, color : false});
+            if (
+                priorityRef.current &&
+                !priorityRef.current.contains(e.target) &&
+                colorRef.current &&
+                !colorRef.current.contains(e.target)
+            ) {
+                setDropdownVisible({ priority: false, color: false })
             }
         };
 
@@ -129,8 +138,8 @@ const TaskList = () => {
     // toggles dropdown for priority and color open
     const toggleDropdown = (field) => {
         setDropdownVisible((prev) => ({
-            ...prev,
-            [field]: !prev[field],
+            priority: field === "priority" ? !prev.priority : false,
+            color: field === "color" ? !prev.color : false,
         }));
     };
 
@@ -242,7 +251,7 @@ const TaskList = () => {
                             </div>
 
                             {/* priority dropdown */}
-                            <div className="task-form-group">
+                            <div className="task-form-group" ref={priorityRef}>
                                 <div className="input-and-icon">
                                     <CircleAlert />
                                     <input
@@ -265,7 +274,7 @@ const TaskList = () => {
                             </div>
 
                             {/* color dropdown */}
-                            <div className="task-form-group">
+                            <div className="task-form-group" ref={colorRef}>
                                 <div className="input-and-icon">
                                     <Palette />
                                     <input
