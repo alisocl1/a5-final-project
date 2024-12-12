@@ -82,10 +82,6 @@ const App = () => {
     return (
         <div className="page-container">
             {renderPage()}
-
-            <button onClick={localStorage.clear()}>
-                Reset
-            </button>
         </div>
     );
 };
