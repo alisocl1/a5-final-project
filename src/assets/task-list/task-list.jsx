@@ -162,7 +162,6 @@ const TaskList = () => {
             </div>
             <div className="task-list">
                 {tasks.length === 0 ? (
-                    // placeholder for debugging
                     <p>No Tasks</p>
                 ) : (
                     sortTasks(tasks).map((task) => (
@@ -184,7 +183,7 @@ const TaskList = () => {
                                 backgroundColor: getHexColor(task.color) || '#fbfbfb'
                             }}>
                         </div>
-                        <span style={{ textDecoration: task.status === 'completed' ? 'line-through': '', color: task.status === 'completed' ? 'darkgrey' : '#414141' }}>
+                        <span style={{ cursor: 'default', textDecoration: task.status === 'completed' ? 'line-through': '', color: task.status === 'completed' ? 'darkgrey' : '#414141' }}>
                             {task.description}
                         </span>
                         <div className="task-action-buttons">

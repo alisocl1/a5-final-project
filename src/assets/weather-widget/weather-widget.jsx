@@ -74,7 +74,7 @@ const WeatherWidget = ({ location }) => {
                 <div className="weather-container">
 
                     {/* top row of weather widget */}
-                    <div className="weather-top-row">
+                    <div className="weather-top-row" style={{ cursor: 'default' }}>
                         <p className="location">
                             <i className="map-marker"></i> {weatherData.name}, {' '}
                             {weatherData.sys.country}
@@ -85,7 +85,7 @@ const WeatherWidget = ({ location }) => {
                     </div>
                 
                     {/* middle row of weather widget */}
-                    <div className="weather-middle-row">
+                    <div className="weather-middle-row" style={{ cursor: 'default' }}>
                         <div className="temperature">
                             {convertToFahrenheit(weatherData.main.temp).toFixed(1)}°F
                         </div>
@@ -96,22 +96,22 @@ const WeatherWidget = ({ location }) => {
 
                     {/* bottom row of weather widget */}
                     <div className="weather-bottom-row">
-                        <div className="weather-details-container">
+                        <div className="weather-details-container" style={{ cursor: 'pointer' }}>
 
                             {/* rain */}
-                            <div className="weather-detail"> 
+                            <div className="weather-detail" title={precipitation > 0 ? `Rainfall: ${precipitation}mm in the last hour` : "No rainfall in the last hour" }> 
                                 <i className="fa fa-cloud-showers-heavy"></i>
                                 <span>{precipitation > 0 ? `${precipitation}mm` : 'no rain'}</span>
                             </div>
 
                             {/* humidity */}
-                            <div className="weather-detail">
+                            <div className="weather-detail" title={`Humidity: ${weatherData.main.humidity}%`}>
                                 <i className="fa fa-tint"></i> 
                                 <span>{weatherData.main.humidity}%</span>
                             </div>
 
                             {/* wind */}
-                            <div className="weather-detail">
+                            <div className="weather-detail" title={`Wind: ${weatherData.wind.speed} miles per hour`}>
                                 <i className="fa fa-wind"></i> 
                                 <span>{windSpeedConversion(weatherData.wind.speed)} mph</span>
                             </div>
