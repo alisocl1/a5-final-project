@@ -56,7 +56,8 @@ const WeatherWidget = ({ location }) => {
                 setWeatherData(response.data);
                 setError('');
             } catch (err) {
-                setError('Failed to fetch weather data.')
+                console.log(location);
+                setError('Failed to fetch weather data. Please select a different location.')
                 setWeatherData(null);
             }
             setLoading(false);

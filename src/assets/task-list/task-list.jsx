@@ -33,7 +33,12 @@ const TaskList = () => {
 
     // load tasks from local storage
     useEffect(() => {
-        const storedTasks = JSON.parse(localStorage.getItem('tasks') || []);
+        let storedTasks;
+        if (localStorage.getItem('tasks')) {
+            storedTasks = JSON.parse(localStorage.getItem('tasks') || []);
+        } else {
+            storedTasks = localStorage.getItem('tasks') || [];
+        }
         setTasks(storedTasks);
     }, []);
 
@@ -141,14 +146,15 @@ const TaskList = () => {
         <div className="task-list-container">
             <div className="task-list-header">
                 <p>My Tasks</p>
+                <div className="item-seperator"></div>
                 <button className="add-task-button" onClick={() => setFormVisible(true)}>
                     <Plus size={18} />
                 </button>
             </div>
             <div className="task-list">
                 {tasks.length === 0 ? (
-                    // placeholder for debugging, removeable
-                    <p>no tasks available</p>
+                    // placeholder for debugging
+                    <p>No Tasks</p>
                 ) : (
                     sortTasks(tasks).map((task) => (
                         <div key={task.id} className="task-item">
@@ -200,7 +206,6 @@ const TaskList = () => {
             )}
             </div>
             
-            {/* should probably have done this as a sep func (im so sorry i forgot) */}
             {isFormVisible && (
                 <div className="task-form-overlay">
                     <div className="task-form-container">
@@ -249,7 +254,7 @@ const TaskList = () => {
                                         placeholder="Priority (optional)"
                                     />
                                     {dropdownVisible.priority && (
-                                        <div className="dropdown">
+                                        <div className="dropdown priority">
                                             <div onClick={() => handleOptionSelect("priority", "none")}>none</div>
                                             <div onClick={() => handleOptionSelect("priority", "low")}>low</div>
                                             <div onClick={() => handleOptionSelect("priority", "medium")}>medium</div>
@@ -272,7 +277,7 @@ const TaskList = () => {
                                         placeholder="Color (optional)"
                                     />
                                     {dropdownVisible.color && (
-                                        <div className="dropdown">
+                                        <div className="dropdown color">
                                             <div className="dropdown-option" onClick={() => handleOptionSelect("color", "none")}>none</div>
                                             {colors.map((color, index) => (
                                                 <div
@@ -300,7 +305,7 @@ const TaskList = () => {
                                     ></textarea>
                                 </div>
                             </div>
-                            <button type="submit" className="save-button">Save</button>
+                            <button type="submit" className="save-button">Save Task</button>
                         </form>
                     </div>
                 </div>

@@ -98,9 +98,18 @@
 }
 
 .error-box {
-    color: red;
+    border-radius: 8px;
+    padding: 3vh;
+    min-width: 350px;
+    height: 170px;
+    max-width: 80vw;
+    margin: 10vh;
+    margin-left: 10vw;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    color: white;
     background-color: rgba(225, 225, 225, 0.5);
-    margin: 10vh 10vw;
     font-family: 'Quicksand';
     text-align: center;
     font-weight: 600;
