@@ -203,6 +203,14 @@
   margin-bottom: 10px;
 }
 
+.delete-button, .edit-button{
+  background:#333;
+}
+
+.delete-button:hover, .edit-button:hover{
+  background: rgb(104, 110, 183);
+}
+
 .fc-button{
   font-weight: bold !important;
   font-size: 16px !important;
