@@ -9,7 +9,7 @@
     background-repeat: no-repeat;
 }
 
-.head-container{
+.head-container {
     display: flex;
     justify-content: space-between;
     background-size: cover;
@@ -23,7 +23,6 @@
     white-space: nowrap;
     display: flex;
     margin: 20vh 10vw 5vh 10vw;
-    z-index: 3;
 }
 
 .widget-container {

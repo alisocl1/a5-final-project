@@ -35,7 +35,7 @@ const UserRoom = ({ userName, userLocation, onButtonClick, onNavigate, isMenuVis
                     <TaskList />
                 </div>
             </div>
-            <div>
+            <div className="calendar">
                 <Calendar />
             </div>
         </div>
