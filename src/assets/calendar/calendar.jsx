@@ -123,10 +123,10 @@ const Calendar = () => {
   return (
     <div className='calendar-container'>
 
-      {/* DEBUG */}
+      {/* DEBUG
       <button onClick={clearAllEvents} className="clear-button">
         Clear [DEBUG]
-      </button>
+      </button> */}
 
       <button onClick={() => setIsModalOpen(true)} className="add-button" title='Add an event'>
         + Add Event

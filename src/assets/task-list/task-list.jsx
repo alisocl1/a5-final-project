@@ -156,7 +156,7 @@ const TaskList = () => {
             <div className="task-list-header">
                 <p>My Tasks</p>
                 <div className="item-seperator"></div>
-                <button className="add-task-button" onClick={() => setFormVisible(true)}>
+                <button className="add-task-button" onClick={() => setFormVisible(true)} title='Add new task'>
                     <Plus size={18} />
                 </button>
             </div>
@@ -169,7 +169,7 @@ const TaskList = () => {
                         <div key={task.id} className="task-item">
 
                         <label class="task-checkbox-container">
-                            <input type="checkbox" 
+                            <input type="checkbox"
                                 checked={task.status === 'completed'} 
                                 onChange={() => 
                                     handleUpdateTaskStatus(
@@ -177,7 +177,7 @@ const TaskList = () => {
                                         task.status === 'completed' ? 'incomplete' : 'completed'
                                     )
                                 } />
-                            <span class="checkmark"></span>
+                            <span class="checkmark" title='Mark as done'></span>
                         </label>
                         <div className="task-color-tag"
                             style={{
@@ -190,12 +190,12 @@ const TaskList = () => {
                         <div className="task-action-buttons">
 
                             {/* delete button */}
-                            <button className="delete-task-icon" onClick={() => handleDeleteTask(task.id)}>
+                            <button className="delete-task-icon" onClick={() => handleDeleteTask(task.id)} title='Delete task'>
                                 <Trash2 size={16} />
                             </button>
 
                             {/* editing button (optional we can take it out */}
-                            <button className="edit-task-icon" onClick={() => {
+                            <button className="edit-task-icon" title='Edit task' onClick={() => {
                                 setFormVisible(true);
                                 setEditingTask(task);
                                 setNewTask({
@@ -241,6 +241,7 @@ const TaskList = () => {
                         >
                             <div className="task-form-group">
                                 <input className="input-title"
+                                    title='Enter task title.'
                                     type="text"
                                     name="description"
                                     value={newTask.description}

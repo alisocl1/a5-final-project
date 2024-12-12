@@ -24,6 +24,10 @@
   border: none;
 }
 
+.fc-col-header-cell-cushion {
+  color:rgb(0, 0, 0) !important;
+}
+
 .fc-scroller-harness, .fc-scroller-liquid-absolute{
   overflow: visible !important;
 }
