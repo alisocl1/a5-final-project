@@ -32,20 +32,18 @@
   background-color: #f9f9f9;
   border-radius: 15px;
   box-shadow: 0px 0px 0px 1px #c2c4e0;
-  /* border: 1px solid #c5c6d8; */
 }
 
 .has-event{
   background-color: #f9f9f9;
   border-radius: 15px;
-  border: 1px solid #000000 !important; /* Example: Set the border color for days with events */
+  border: 1px solid #000000 !important;
   cursor: pointer;
 }
 
 .fc-daygrid-day-events{
   margin-left: 6px;
   margin-right: 6px;
-  margin-bottom: 3px;
 }
 
 .fc-daygrid-event{
@@ -195,8 +193,9 @@
 }
 
 /* Buttons */
-.add-button, .add-event-button, .delete-button {
+.add-button, .save-button, .delete-button, .edit-button {
   background-image: linear-gradient(to right, #183c80 , #9a9bf0);
+  color:white;
   border: none;
   padding: 10px 20px;
   border-radius: 5px;
@@ -224,6 +223,11 @@
 
 .delete-button{
   background-image: none;
+}
+
+.edit-button{
+  background-image: none;
+  margin-right: 10px;
 }
 
 .close-icon {

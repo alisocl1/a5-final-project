@@ -22,10 +22,11 @@ function hexToRGBA(hex, toggle) {
   }
 
   if (toggle) {
+    // Return "lightened" color
     return `rgba(${r}, ${g}, ${b}, 0.1)`;
   }
   else{
-    // Darken the color by multiplying each component by 0.7
+    // Return darkened color
     r = Math.floor(r * 0.7);
     g = Math.floor(g * 0.7);
     b = Math.floor(b * 0.7);
@@ -35,8 +36,7 @@ function hexToRGBA(hex, toggle) {
 
 }
 
-
-
+// Calendar element
 const Calendar = () => {
   const colorPalette = [
     '#FF5733', '#33FF57', '#3357FF', '#FF33A1', '#FF8C33', '#8C33FF',
@@ -51,6 +51,7 @@ const Calendar = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState(null);
+  const [isEventOverlayOpen, setIsEventOverlayOpen] = useState(false);
 
   // Save events to localStorage whenever the events change
   useEffect(() => {
@@ -67,6 +68,28 @@ const Calendar = () => {
     setIsModalOpen(false); // Close the modal after adding
   };
 
+  // Handle the "Edit" button click
+  const handleEditEvent = () => {
+    setIsModalOpen(true);
+    setIsEventOverlayOpen(false);
+  };
+
+  const handleClose = () => {
+    setIsModalOpen(false);
+    setSelectedEvent(null);
+  }
+
+  // Handle updating event
+  const updateEvent = (updatedEvent) => {
+    setEvents((prevEvents) =>
+      prevEvents.map((event) =>
+        event.id === updatedEvent.id ? { ...event, ...updatedEvent } : event
+      )
+    );
+    setIsModalOpen(false);
+    setSelectedEvent(null);
+  };
+
   // Handle event click to show event details
   const handleEventClick = (clickInfo) => {
 
@@ -76,8 +99,10 @@ const Calendar = () => {
       start: clickInfo.event.startStr,
       end: clickInfo.event.endStr,
       color: clickInfo.event.backgroundColor,
+      isAllDay: clickInfo.event.allDay,
       description: clickInfo.event.extendedProps.description || '',
     });
+    setIsEventOverlayOpen(true);
   };
 
   // Remove event
@@ -88,6 +113,7 @@ const Calendar = () => {
     setSelectedEvent(null);
   };
 
+  // For debugging
   const clearAllEvents = () => {
     setEvents([]);
     localStorage.removeItem('events');
@@ -96,10 +122,13 @@ const Calendar = () => {
 
   return (
     <div className='calendar-container'>
-      {/* <button onClick={clearAllEvents} className="clear-button">
+
+      {/* DEBUG */}
+      <button onClick={clearAllEvents} className="clear-button">
         Clear [DEBUG]
-      </button> */}
-      <button onClick={() => setIsModalOpen(true)} className="add-event-button" title='Add an event'>
+      </button>
+
+      <button onClick={() => setIsModalOpen(true)} className="add-button" title='Add an event'>
         + Add Event
       </button>
 
@@ -115,10 +144,11 @@ const Calendar = () => {
           const startDate = event.startStr;
           const endDate = event.endStr;
           const isMultipleDays = endDate != '' && !(startDate.slice(0, 10)==endDate.slice(0, 10));
+          // specific formatting for All Day events
           if (info.event.allDay || isMultipleDays) {
             info.el.classList.add("all-day-event");
-
           }
+          // cool bordering for normal events
           else{
             info.el.style.borderColor = info.event.backgroundColor;
             info.el.style.backgroundColor = `${hexToRGBA(info.event.backgroundColor, 1)}`;
@@ -131,16 +161,17 @@ const Calendar = () => {
           right: 'title',
         }}
       />
-
+      
       {isModalOpen && (
-        <AddEventModal onClose={() => setIsModalOpen(false)} onAddEvent={addEvent} />
+        <AddEventModal onClose={handleClose} onAddEvent={addEvent} event={selectedEvent} onUpdateEvent={updateEvent}/>
       )}
 
-      {selectedEvent && (
+      {isEventOverlayOpen && selectedEvent && (
         <EventOverlay
           event={selectedEvent}
           onClose={() => setSelectedEvent(null)}
-          onDelete={() => removeEvent(selectedEvent.id)} // Delete event when clicked
+          onDelete={() => removeEvent(selectedEvent.id)}
+          onEdit={handleEditEvent}
         />
       )}
     </div>
@@ -148,17 +179,18 @@ const Calendar = () => {
 };
 
 // Modal for adding a new event
-const AddEventModal = ({ onClose, onAddEvent }) => {
-  const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
-  const [time, setTime] = useState('');
-  const [endDate, setEndDate] = useState('');
-  const [endTime, setEndTime] = useState('');
-  const [description, setDescription] = useState('');
-  const [isAllDay, setisAllDay] = useState(false);
-  const [color, setColor] = useState('#4770ac');
+const AddEventModal = ({ onClose, onAddEvent, event, onUpdateEvent }) => {
+  console.log(event);
+  const [title, setTitle] = useState(event ? event.title : '');
+  const [date, setDate] = useState(event ? event.start.slice(0, 10) : '');
+  const [time, setTime] = useState(event ? event.start.slice(11, 16) : '');
+  const [endDate, setEndDate] = useState(event ? event.end?.slice(0, 10) : '');
+  const [endTime, setEndTime] = useState(event ? event.end?.slice(11, 16) : '');
+  const [description, setDescription] = useState(event ? event.description : '');
+  const [isAllDay, setIsAllDay] = useState(event ? event.isAllDay : false);
+  const [color, setColor] = useState(event ? event.color : '#4770ac');
   
-
+  // Handles creating/editing event when save button is pressed
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!title || !date || (!isAllDay && (!time || !endTime))) {
@@ -170,20 +202,28 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
       alert('End date and time must be after start date and time.');
       return;
     }
-
+    
+    // Determine start and end times based on all-day
     const start = isAllDay ? date : `${date}T${time}`;
     const end = isAllDay ? null : `${endDate}T${endTime}`;
 
-    // Add event
-    onAddEvent({
+    const eventData = {
       title,
       start,
       end,
       description,
       allDay: isAllDay,
-      color: color,
-    });
+      color,
+    };
 
+    // Update existing event
+    if (event) {
+      onUpdateEvent({ id: event.id, ...eventData });
+    }
+    else {
+      // Add new event
+      onAddEvent(eventData);
+    }
 
     // Reset fields and close modal
     setTitle('');
@@ -192,13 +232,15 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
     setEndDate('');
     setEndTime('');
     setDescription('');
-    setisAllDay(false);
+    setIsAllDay(false);
     setColor('#4770ac')
     onClose();
   };
+  console.log(isAllDay);
 
   return (
     <div className="calendar-overlay">
+      {/* form for creating/editing event */}
       <div className="event-modal">
         <div className="modal-header">
           <button onClick={onClose} className="close-icon">
@@ -215,6 +257,7 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
             required
           />
           <div>
+            {/* Start date required for ALL events */}
             <input className='input-date'
               title='Select start date.'
               type="date"
@@ -229,6 +272,7 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
               }}
               required
             />
+            {/* Remaining date/time inputs only required if isAllDay */}
             {!isAllDay && (
               <input className='input-date'
                 title='Select start time.'
@@ -261,22 +305,27 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
               />
             </div>
           )}
-          <label class="check-container">
-            <input type="checkbox" checked={isAllDay} onChange={() => setisAllDay(!isAllDay)} />
-            <span class="checkmark"></span>
-            <span class="all-day">All-Day Event</span>
+
+          {/* Checkbox for All-Day Event */}
+          <label className="check-container">
+            <input type="checkbox" checked={isAllDay} onChange={() => setIsAllDay(!isAllDay)} />
+            <span className="checkmark"></span>
+            <span className="all-day">All-Day Event</span>
           </label>
+
+          {/* Optional Description */}
           <textarea className='input-description'
             placeholder="Event Description (optional)"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
           
-          <ColorDropdown onColorSelect={setColor} />
+          {/* ColorDropdown propogates color for editing existing events */}
+          <ColorDropdown onColorSelect={setColor} currentColor={color} />
           
           <div className="modal-actions">
             <button type="submit" className="add-button">
-              Add Event
+              Save Event
             </button>
           </div>
         </form>
@@ -285,6 +334,7 @@ const AddEventModal = ({ onClose, onAddEvent }) => {
   );
 };
 
+// Format the event date/time in a nice, consise way
 function formatEventTime(startTime, endTime) {
   if (!endTime) {
     const parsedStartTime = parseISO(startTime);
@@ -305,20 +355,19 @@ function formatEventTime(startTime, endTime) {
 
   // Check if the start and end dates are the same
   if (startDateFormatted === endDateFormatted) {
-    // If the dates are the same, return a simple format
     return `${startDateFormatted} ⋅ ${startTimeFormatted} – ${endTimeFormatted}`;
   } else {
-    // If the dates are different, format as: "December 8 ⋅ 10:11 PM – December 12 ⋅ 10:12 PM"
     return `${startDateFormatted} ⋅ ${startTimeFormatted} – ${endDateFormatted} ⋅ ${endTimeFormatted}`;
   }
 }
 
 // Modal for event details
-const EventOverlay = ({ event, onClose, onDelete }) => {
+const EventOverlay = ({ event, onClose, onDelete, onEdit}) => {
   const formatedEventDateTime = formatEventTime(event.start, event.end)
 
   return (
     <div className="calendar-overlay">
+      {/* Display event details */}
       <div className="event-modal">
         <div className="modal-header">
           <button onClick={onClose} className="close-icon">
@@ -329,6 +378,9 @@ const EventOverlay = ({ event, onClose, onDelete }) => {
         <p>{formatedEventDateTime}</p>
         {event.description && <p><strong>Description:</strong> {event.description}</p>}
         <div className="modal-actions">
+          <button onClick={onEdit} className="edit-button">
+            Edit
+          </button>
           <button onClick={onDelete} className="delete-button">
             Delete
           </button>

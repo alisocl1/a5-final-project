@@ -1,12 +1,14 @@
 import React, { useState, useEffect, useRef } from "react";
 import "./color-dropdown.css";
 
-const ColorDropdown = ({ onColorSelect }) => {
+// Color Selector for events
+const ColorDropdown = ({ onColorSelect, currentColor }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedColor, setSelectedColor] = useState("#4770ac");
+    const [selectedColor, setSelectedColor] = useState(currentColor || "#4770ac");
     const dropdownRef = useRef(null);
     const modalRef = useRef(null);
 
+    // Prechosen palette
     const colorSamples = [
         "#d44c4c", "#d6792d", "#ebd247", "#80cc8a", "#15813e",
         "#4fa5c7", "#4770ac", "#836bc5", "#bd76c4", "#525252"
@@ -20,6 +22,7 @@ const ColorDropdown = ({ onColorSelect }) => {
         if (onColorSelect) onColorSelect(color);
     };
 
+    // clicking outside closes the dropdown
     useEffect(() => {
         const handleClickOutside = (event) => {
         if (
@@ -30,7 +33,6 @@ const ColorDropdown = ({ onColorSelect }) => {
         }
         };
 
-        // Add event listener
         document.addEventListener('mousedown', handleClickOutside);
 
         // Clean up event listener on component unmount
@@ -47,7 +49,7 @@ const ColorDropdown = ({ onColorSelect }) => {
     return (
         <div className="color-dropdown" onClick={toggleModal} title="Select event color." ref={dropdownRef}>
             <div className="color-circle" style={{ backgroundColor: selectedColor }}></div>
-            <div class="triangle">⏷</div>
+            <div className="triangle">⏷</div>
 
 
         {isModalOpen && (
