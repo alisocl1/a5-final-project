@@ -286,15 +286,15 @@
     caret-color: rgb(91, 99, 189);
 }
 
-.save-button {
+/* .task-form-group .save-button {
     display: flex;
-    color: black;
+    color: white !important;
     border-radius: 4px;
     border: none;
     margin-top: 5px;
     margin-left: auto;
     background-image: linear-gradient(to right, #183c80 , #9a9bf0);
-}
+} */
 
 /* Media query resizing */
 @media (max-width: 900px) {

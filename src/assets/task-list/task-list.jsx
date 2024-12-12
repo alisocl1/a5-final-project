@@ -304,8 +304,8 @@ const TaskList = () => {
                                         rows="4"
                                     ></textarea>
                                 </div>
+                                <button type="submit" className="save-task-button">Save Task</button>
                             </div>
-                            <button type="submit" className="save-button">Save Task</button>
                         </form>
                     </div>
                 </div>
