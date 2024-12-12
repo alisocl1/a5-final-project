@@ -175,14 +175,14 @@
 
 .task-form-container {
     position: absolute;
-    background-color: white;
+    background-color: #f2f4ff;
     border: 1px solid #ccc;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 400px;
     margin-right: 5px;
     max-width: 90%;
-    padding: 30px;
+    padding: 20px 30px;
 }
 
 .task-form-container .close-icon {
@@ -198,7 +198,7 @@
     cursor: pointer;
     border: none;
     border-radius: 5px;
-    background:#e2e2e2;
+    background:#dee0eb;
     color:#333;
 }
 
@@ -219,7 +219,7 @@
     overflow-y: auto;
     right: 0;
     width: 91%;
-    background-color: white;
+    background:#eef0fd;
     border: none;
     border-radius: 8px;
     box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
@@ -232,7 +232,7 @@
     max-height: 150px;
     right: 0;
     width: 91%;
-    background-color: white;
+    background:#eef0fd;
     border: none;
     border-radius: 8px;
     box-shadow: 0px 0px 50px rgba(0, 0, 0, 0.1);
@@ -253,11 +253,12 @@
     width: 100%;
     padding: 8px 15px;
     font-size: 15px;
+    font-weight: 500;
     /* background-color: transparent; */
 }
 
 .dropdown div:hover {
-    background-color: #ccc;
+    background: #ced1e0;
 }
 
 .dropdown-option svg {
@@ -277,7 +278,7 @@
 }
 
 .input-and-icon input:hover, textarea:hover {
-    background-color: #ccc;
+    background:#ced1e0;
 }
 
 .input-and-icon input:focus, textarea:focus{
@@ -286,15 +287,15 @@
     caret-color: rgb(91, 99, 189);
 }
 
-/* .task-form-group .save-button {
+.task-form-group .save-task-button {
     display: flex;
-    color: white !important;
+    color: white;
     border-radius: 4px;
     border: none;
     margin-top: 5px;
     margin-left: auto;
     background-image: linear-gradient(to right, #183c80 , #9a9bf0);
-} */
+}
 
 /* Media query resizing */
 @media (max-width: 900px) {

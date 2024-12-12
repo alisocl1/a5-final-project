@@ -194,7 +194,7 @@
 
 /* Buttons */
 .add-button, .save-button, .delete-button, .edit-button {
-  background-image: linear-gradient(to right, #183c80 , #9a9bf0);
+  background-image: linear-gradient(to right, #183c80 , #9a9bf0) !important;
   color:white;
   border: none;
   padding: 10px 20px;
